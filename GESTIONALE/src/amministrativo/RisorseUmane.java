@@ -33,7 +33,7 @@ public class RisorseUmane extends RepartoAmministrativo {
 	
 	/**
 	 * Paga tutti i dipendenti di una data lista in base allo stipendio che gli spetta
-	 * @param tipoDIpendentiDaPagare tipo del dipendente da pagare
+	 * @param tipoDipendentiDaPagare tipo del dipendente da pagare
 	 */
 	public void pagaDipendenti(String tipoDipendentiDaPagare) {
 		ArrayList<Dipendente> daPagare = estrattore(tipoDipendentiDaPagare);
@@ -42,6 +42,10 @@ public class RisorseUmane extends RepartoAmministrativo {
 		}
 	}
 	
+	/**
+	 * Azzera lo stato di pagamento di un dato tipo di dipendenti, in modo che possano essere pagati.
+	 * @param tipoDipendenti tipo di dipendenti di cui si vuole azzerare il mese fiscale
+	 */
 	public void nuovoMeseFiscale(String tipoDipendenti) {
 		ArrayList<Dipendente> daPagare = estrattore(tipoDipendenti);
 		for(Dipendente d:daPagare) {
@@ -53,8 +57,8 @@ public class RisorseUmane extends RepartoAmministrativo {
 	 * Aggiunge un dipendete alla lista dei dipendi liberi
 	 * @param dipendenteAssunto dipendente da assumere
 	 */
-	public void assumi(Dipendente dipendeteAssunto) {
-		personaleLibero.add(dipendeteAssunto);
+	public void assumi(Dipendente dipendenteAssunto) {
+		personaleLibero.add(dipendenteAssunto);
 	}
 	
 	/**

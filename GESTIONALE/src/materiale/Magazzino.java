@@ -4,11 +4,17 @@ import java.util.ArrayList;
 import eccezioni.CapacitaSuperataException;
 import eccezioni.ProdottoNonPresenteException;
 
-public class Magazzino {
+/**
+ * Questa classe rappresenta il concetto di Magazzino. Il Magazzino si occupa di conservare i materiali acquistati dall'azienda, permette di aggiungere o 
+ * rimuovere i suddetti materiali entro un certo limite di capacità.
+ * @author Andrea Ercolino
+ *
+ */
+public class Magazzino<T extends MaterialeDaCostruzione> {
 	private int capacitaMax;
 	private int caricoAttuale;
 	private double valoreMagazzino;
-	private ArrayList<MaterialeDaCostruzione> materiali;
+	private ArrayList<T> materiali;
 	
 	public Magazzino(int capacitaMax) {
 		this.capacitaMax = capacitaMax;
@@ -23,22 +29,38 @@ public class Magazzino {
 		return valoreMagazzino;
 	}
 	
-	public ArrayList<MaterialeDaCostruzione> getMaterialiInMagazzino() {
+	/**
+	 * Questo metodo restituisce la lista di materiali presenti nel magazzino
+	 * @return
+	 */
+	public ArrayList<T> getMaterialiInMagazzino() {
 		return materiali;
 	}
 	
-	
-	public void aggiungiMateriale(MaterialeDaCostruzione m) throws CapacitaSuperataException{
-		if(m.getPeso() + caricoAttuale > capacitaMax) throw new CapacitaSuperataException();
+	/**
+	 * Questo metodo permette di aggiungere un MaterialeDaCostruzione al magazzino se l'aggiunta di quest'ultimo non implica
+	 * il superamento della capacità massima del Magazzino.
+	 * @param daAggiungere Materiale da aggiungere al magazzino
+	 * @throws CapacitaSuperataException eccezione controllata lanciata nel caso in cui il prodotto non può essere aggiunto perché verrebbe superata la 
+	 * capacità massima del magazzino
+	 */
+	public void aggiungiMateriale(T daAggiungere) throws CapacitaSuperataException{
+		if(daAggiungere.getPeso() + caricoAttuale > capacitaMax) throw new CapacitaSuperataException();
 		else {
-			caricoAttuale += m.getPeso();
-			materiali.add(m);
+			caricoAttuale += daAggiungere.getPeso();
+			materiali.add(daAggiungere);
 		}
 		
 	}
 	
-	public MaterialeDaCostruzione rimuoviMateriale(String codiceProdotto) {
-		for (MaterialeDaCostruzione m:materiali) {
+	/**
+	 * Questo metodo permette di rimuovere un MaterialeDaCostruzione dal magazzino quest'ultimo è presente; altrimenti lancia l'eccezione non controllata
+	 * ProdottoNonPresenteException 
+	 * @param codiceProdotto codice del prodotto da rimuovere
+	 * @return MaterialeDaCostruzione rimosso.
+	 */
+	public T rimuoviMateriale(String codiceProdotto) {
+		for (T m:materiali) {
 			if(m.getCodiceProdotto().equalsIgnoreCase(codiceProdotto)) {
 				caricoAttuale -= m.getPeso();
 				materiali.remove(materiali.indexOf(m));

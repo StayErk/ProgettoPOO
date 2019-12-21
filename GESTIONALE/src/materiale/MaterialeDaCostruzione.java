@@ -1,6 +1,12 @@
 package materiale;
 
-public final class MaterialeDaCostruzione {
+/**
+ * Questa classe rappresenta il concetto di astratto di MaterialeDaCostruzione che poi verrà raffinata in categorie di prodotto.
+ * Il materiale da costruzione è composto da un peso, un valore e un codiceProdotto
+ * @author Andrea Ercolino
+ *
+ */
+public abstract class MaterialeDaCostruzione implements Cloneable {
 	private String codiceProdotto;
 	private double valore;
 	private int peso;
@@ -23,4 +29,25 @@ public final class MaterialeDaCostruzione {
 		return peso;
 	}
 	
+	public String toString() {
+		return getClass().getName()+"[codiceProdotto="+codiceProdotto+", valore="+valore+", peso="+peso+"]";
+	}
+	
+	public boolean equals(Object o) {
+		if(o == null) return false;
+		if(getClass() == o.getClass()) {
+			MaterialeDaCostruzione m = (MaterialeDaCostruzione) o;
+			return codiceProdotto.equals(m.codiceProdotto) && valore == m.valore && peso == m.peso;
+		}
+		return false;
+	}
+	
+	public MaterialeDaCostruzione clone() {
+		try {
+			return (MaterialeDaCostruzione) super.clone();
+		}
+		catch(CloneNotSupportedException e){
+			return null;
+		}
+	}
 }
