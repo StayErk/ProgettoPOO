@@ -3,8 +3,10 @@ package operativo;
 import java.util.ArrayList;
 
 import amministrativo.RisorseUmane;
+import materiale.MaterialeDaCostruzione;
 import personale.Dipendente;
 import personale.Squadra;
+import utils.Estraibile;
 import amministrativo.RisorseMateriali;
 
 public class RepartoOperativo {
@@ -18,9 +20,12 @@ public class RepartoOperativo {
 		return cantieri;
 	}
 	
-	private void apriCantiere(double valoreIniziale, double valoreMateriali, Dipendente capocantiere) {
+	private void apriCantiere(double valoreIniziale, ArrayList<MaterialeDaCostruzione> materialiRichiesti, Dipendente capocantiere) {
+		double valoreMateriali = 0;
+		for(MaterialeDaCostruzione m: materialiRichiesti) {
+			valoreMateriali += m.getValoreProdotto();
+		}
 		double valoreCantiere = valoreIniziale + valoreMateriali;
-		//TODO implementare insterfaccia per scegliere capocantiere
 		Cantiere cantiere = new Cantiere(valoreCantiere, capocantiere);
 	}
 	
@@ -35,9 +40,7 @@ public class RepartoOperativo {
 	private double chiudiCantiere(Cantiere cantiereDaChiudere) {
 		for(Cantiere c:cantieri) {
 			if(c.equals(cantiereDaChiudere)) {
-				double toReturn = c.getValoreCantiere();
-				cantieri.remove(c);
-				return toReturn;
+				return c.chiusuraCantiere();
 			}
 		}
 		return 0;

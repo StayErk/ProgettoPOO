@@ -10,7 +10,10 @@ public class Cantiere {
 	
 	public Cantiere(double valore, Dipendente capocantiere) {
 		this.valore = valore;
-		this.capocantiere = capocantiere;
+		if((!capocantiere.getStato() && capocantiere instanceof  Dirigente) /*|| (!capocantiere.getStato() && valore < 500000 && capocantiere instanceof Quadro)*/) {
+			this.capocantiere = capocantiere;
+			this.capocantiere.impegnaDipendente();
+		}
 		squadre = new ArrayList<Squadra>();
 	}
 	
@@ -27,6 +30,15 @@ public class Cantiere {
 	}
 	
 	public void aggiungiSquadra(Squadra team) {
+		team.impegnaSquadra();
 		squadre.add(team);
+	}
+	
+	public double chiusuraCantiere() {
+		capocantiere.liberaDipendente();
+		for (Squadra team:squadre) {
+			team.liberaSquadra();
+		}
+		return valore;
 	}
 }

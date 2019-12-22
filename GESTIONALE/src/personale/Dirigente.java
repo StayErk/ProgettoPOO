@@ -1,16 +1,16 @@
 package personale;
 
 public class Dirigente extends Dipendente {
-	private double stipendio;
+	private String titoloStudio;
 	
-	public Dirigente(String nome, String cognome, double stipendio) {
+	public Dirigente(String nome, String cognome, String titoloStudio) {
 		super(nome, cognome);
-		this.stipendio = stipendio; 
+		this.titoloStudio = titoloStudio;
 	}
 	
-	public double paga() {
-		super.paga();
-		return stipendio;
+	public String getTitoloStudio(){
+		return titoloStudio;
 	}
+	
 	
 }

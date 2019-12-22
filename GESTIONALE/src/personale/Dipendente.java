@@ -5,6 +5,7 @@ public abstract class Dipendente implements Pagabile{
 	private String cognome;
 	private int matricolaDipendete;
 	private boolean pagato;
+	private boolean impegnato;
 	private static int numeroDipendenti = 1;
 	
 	
@@ -13,23 +14,35 @@ public abstract class Dipendente implements Pagabile{
 		this.cognome = cognome;
 		this.matricolaDipendete = numeroDipendenti++;
 		pagato = false;
+		
 	}
 	
 	public boolean getStatoPagamento() {
 		return pagato;
 	}
 	
-	public double paga() {
+	public void paga() {
 		pagato = true;
-		return 0;
 	}
 	
 	public void resetStatoPagamento() {
 		pagato = false;
 	}
 	
+	public void impegnaDipendente() {
+		impegnato = true;
+	}
+	
+	public void liberaDipendente() {
+		impegnato = false;
+	}
+	
 	public String getNome() {
 		return nome;
+	}
+	
+	public boolean getStato() {
+		return impegnato;
 	}
 	
 	public String getCognome() {
