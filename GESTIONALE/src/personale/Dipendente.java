@@ -1,6 +1,6 @@
 package personale;
 
-public abstract class Dipendente implements Pagabile{
+public abstract class Dipendente implements Pagabile, Cloneable{
 	private String nome;
 	private String cognome;
 	private int matricolaDipendete;
@@ -53,5 +53,25 @@ public abstract class Dipendente implements Pagabile{
 		return matricolaDipendete;
 	}
 	
+	public String toString() {
+		return getClass().getName() + "[nome="+nome+", cognome="+cognome+", matricola dipendente="+matricolaDipendete+", pagato="+pagato+", impegnato="+impegnato+"]";
+	}
+	
+	public boolean equals(Object o) {
+		if(o == null) return false;
+		if(getClass() == o.getClass()) {
+			Dipendente d = (Dipendente) o;
+			return impegnato == d.impegnato && pagato == d.pagato && nome.equals(d.nome) && cognome.equals(d.cognome) && matricolaDipendete == d.matricolaDipendete;
+		}
+		return false;
+	}
+	
+	public Dipendente clone() {
+		try {
+			return (Dipendente) super.clone();
+		} catch (CloneNotSupportedException e) {
+			return null;
+		}
+	}
 	
 }

@@ -5,19 +5,21 @@ import personale.*;
 
 public class Cantiere {
 	private double valore;
-	private Dipendente capocantiere;
+	private Responsabile capocantiere;
 	private ArrayList<Squadra> squadre;
 	
-	public Cantiere(double valore, Dipendente capocantiere) {
+	public Cantiere(double valore, Responsabile capocantiere) {
 		this.valore = valore;
-		if((!capocantiere.getStato() && capocantiere instanceof  Dirigente) /*|| (!capocantiere.getStato() && valore < 500000 && capocantiere instanceof Quadro)*/) {
-			this.capocantiere = capocantiere;
-			this.capocantiere.impegnaDipendente();
+		if(this.valore > 500000) {
+			if(capocantiere instanceof Dirigente) {
+				this.capocantiere = capocantiere;
+			}
+			else throw new IllegalArgumentException();
 		}
 		squadre = new ArrayList<Squadra>();
 	}
 	
-	public Dipendente getCapocantiere() {
+	public Responsabile getCapocantiere() {
 		return capocantiere;
 	}
 	
@@ -35,7 +37,8 @@ public class Cantiere {
 	}
 	
 	public double chiusuraCantiere() {
-		capocantiere.liberaDipendente();
+		Dipendente d = (Dipendente) capocantiere;
+		d.liberaDipendente();
 		for (Squadra team:squadre) {
 			team.liberaSquadra();
 		}

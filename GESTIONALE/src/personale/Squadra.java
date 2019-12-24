@@ -3,19 +3,15 @@ package personale;
 import java.util.ArrayList;
 import utils.Estraibile;
 public class Squadra {
-	private Dipendente caposquadra;
+	private Responsabile caposquadra;
 	private ArrayList<Dipendente> gruppo;
 	
-	public Squadra(Dipendente caposquadra) {
-		Estraibile<Dipendente> estrattore = (p) -> p.getClass().getSimpleName().equalsIgnoreCase("dirigente") || p.getClass().getSimpleName().equalsIgnoreCase("quadro"); 
-		if(estrattore.estrai(caposquadra)) {
-			this.caposquadra = caposquadra;
-		}
-		else throw new IllegalArgumentException("Inserire un dirigente o un caposquadra");
+	public Squadra(Responsabile caposquadra) { 
+		this.caposquadra = caposquadra;
 		gruppo = new ArrayList<Dipendente>();
 	}
 	
-	public Dipendente getCaposquadra() {
+	public Responsabile getCaposquadra() {
 		return caposquadra;
 	}
 	
@@ -29,16 +25,18 @@ public class Squadra {
 	}
 	
 	public void impegnaSquadra() {
-		caposquadra.impegnaDipendente();
-		for(Dipendente d:gruppo) {
-			d.impegnaDipendente();
+		Dipendente d = (Dipendente) caposquadra;
+		d.impegnaDipendente();
+		for(Dipendente dip:gruppo) {
+			dip.impegnaDipendente();
 		}
 	}
 	
 	public void liberaSquadra() {
-		caposquadra.liberaDipendente();
-		for(Dipendente d:gruppo) {
-			d.liberaDipendente();
+		Dipendente d = (Dipendente) caposquadra;
+		d.liberaDipendente();
+		for(Dipendente dip:gruppo) {
+			dip.liberaDipendente();
 		}
 	}
 	

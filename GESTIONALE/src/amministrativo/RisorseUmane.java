@@ -32,7 +32,8 @@ public class RisorseUmane extends RepartoAmministrativo {
 	
 	
 	/**
-	 * Paga tutti i dipendenti di una data lista in base allo stipendio che gli spetta. In base al tipo del dipendente effettua il metodo di pagamento corretto
+	 * Paga tutti i dipendenti di una data lista in base allo stipendio che gli spetta. In base al tipo del dipendente
+	 * effettua il metodo di pagamento corretto
 	 * @param criterio criterio di scelta per selezionare i dipendenti da pagare
 	 */
 		public void pagaDipendenti(Estraibile<Dipendente> criterio) {

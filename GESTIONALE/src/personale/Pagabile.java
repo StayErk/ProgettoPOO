@@ -10,4 +10,5 @@ public interface Pagabile {
 	final static double BONUS_IMPIEGATO = 20.00;
 	
 	void paga();
+	void resetStatoPagamento();
 }

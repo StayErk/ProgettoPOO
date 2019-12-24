@@ -1,6 +1,6 @@
 package personale;
 
-public class Quadro extends Dipendente {
+public class Quadro extends Dipendente implements Responsabile{
 	private int numeroGiorniConsulenza;
 	
 	public Quadro(String nome, String cognome, int numeroGiorniConsulenza) {
