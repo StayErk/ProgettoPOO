@@ -5,22 +5,28 @@ import java.util.ArrayList;
 import amministrativo.RisorseUmane;
 import materiale.MaterialeDaCostruzione;
 import personale.Dipendente;
-import personale.Squadra;
+import personale.Responsabile;
 import utils.Estraibile;
 import amministrativo.RisorseMateriali;
 
 public class RepartoOperativo {
 	private ArrayList<Cantiere> cantieri;
+	private RisorseUmane ru;
 	
-	public RepartoOperativo(RisorseUmane hr, RisorseMateriali mr) {
+	public RepartoOperativo(RisorseUmane ru) {
 		cantieri = new ArrayList<Cantiere>();
+		this.ru = ru;
+	}
+	
+	public RisorseUmane getRisorseUmane() {
+		return ru;
 	}
 	
 	public ArrayList<Cantiere> getCantieriAperti(){
 		return cantieri;
 	}
 	
-	private void apriCantiere(double valoreIniziale, ArrayList<MaterialeDaCostruzione> materialiRichiesti, Dipendente capocantiere) {
+	private void apriCantiere(double valoreIniziale, ArrayList<MaterialeDaCostruzione> materialiRichiesti, Responsabile capocantiere) {
 		double valoreMateriali = 0;
 		for(MaterialeDaCostruzione m: materialiRichiesti) {
 			valoreMateriali += m.getValoreProdotto();

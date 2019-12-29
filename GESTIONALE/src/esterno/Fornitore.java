@@ -34,6 +34,7 @@ public class Fornitore<T extends MaterialeDaCostruzione> {
 	 * @param daAggiungere Materiale da Costruzione che deve essere aggiunto al Catalogo
 	 */
 	public void aggiungiProdotto(T daAggiungere) {
+		if(catalogo.contains(daAggiungere)) return;
 		catalogo.add(daAggiungere);
 	}
 	

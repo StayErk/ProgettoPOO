@@ -1,12 +1,17 @@
-package personale;
+package operativo;
 
 import java.util.ArrayList;
+
+import personale.Dipendente;
+import personale.Responsabile;
 import utils.Estraibile;
 public class Squadra {
 	private Responsabile caposquadra;
 	private ArrayList<Dipendente> gruppo;
 	
 	public Squadra(Responsabile caposquadra) { 
+		Dipendente d = (Dipendente) caposquadra;
+		if (d.getStato()) throw new IllegalArgumentException();
 		this.caposquadra = caposquadra;
 		gruppo = new ArrayList<Dipendente>();
 	}
@@ -24,6 +29,14 @@ public class Squadra {
 		gruppo.add(daAggiungere);
 	}
 	
+	public void aggiungiOperaio(ArrayList<Dipendente> daAggiungere) {
+		for(Dipendente d:daAggiungere) {
+			if (gruppo.contains(d) || d.getStato()) return;
+			gruppo.add(d);
+		}
+			
+	}
+	
 	public void impegnaSquadra() {
 		Dipendente d = (Dipendente) caposquadra;
 		d.impegnaDipendente();
@@ -38,6 +51,10 @@ public class Squadra {
 		for(Dipendente dip:gruppo) {
 			dip.liberaDipendente();
 		}
+	}
+	
+	public String toString() {
+		return getClass().getName()+"[responsabile="+caposquadra+", gruppo="+gruppo+"]";
 	}
 	
 	

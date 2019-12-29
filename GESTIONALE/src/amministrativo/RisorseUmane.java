@@ -90,10 +90,13 @@ public class RisorseUmane extends RepartoAmministrativo {
 	 * @param matricolaDipendente matricola del dipendente da licenziare
 	 */
 	public void licenzia(int matricolaDipendente) {
+		Dipendente daRimuovere = null;
 		for (Dipendente d:personale) {
 			if (d.getMatricolaDipendente() == matricolaDipendente)
-				personale.remove(personale.indexOf(d));
+				 daRimuovere = d;
 		}
+		if(daRimuovere != null)
+			personale.remove(daRimuovere);
 	}
 	
 	public ArrayList<Dipendente> scegliDipendenti(Estraibile<Dipendente> criterio){

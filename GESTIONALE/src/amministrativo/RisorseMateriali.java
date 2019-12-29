@@ -24,6 +24,14 @@ public class RisorseMateriali extends RepartoAmministrativo {
 		fornitori = new ArrayList<Fornitore>();
 	}
 	
+	public Magazzino getMagazzino() {
+		return magazzino;
+	}
+	
+	public ArrayList<Fornitore> getFornitori(){
+		return fornitori;
+	}
+	
 	/**
 	 * Questo metodo permette di aggiungere un fornitore alla lista dei fornitori che rifoniscono l'azienda
 	 * @param daAggiungere il Fornitore da aggiungere alla lista
@@ -53,12 +61,10 @@ public class RisorseMateriali extends RepartoAmministrativo {
 	public void acquistaDaFornitore(Fornitore doveAcquistare, MaterialeDaCostruzione daAcquistare) throws CapacitaSuperataException{
 		if(fornitori.contains(doveAcquistare)) {
 			Fornitore f = fornitori.get(fornitori.indexOf(doveAcquistare));
-			if (f.getCatalogo().contains(daAcquistare)) {
+			if(f.getCatalogo().contains(daAcquistare)) {
 				ArrayList<MaterialeDaCostruzione> catalogo = f.getCatalogo();
-				MaterialeDaCostruzione acquisto = (MaterialeDaCostruzione) f.getCatalogo().get(catalogo.indexOf(daAcquistare));
-				this.effettuaSpesa(acquisto.getValoreProdotto());
-				magazzino.aggiungiMateriale(acquisto);
-			}
+				effettuaSpesa(daAcquistare.getValoreProdotto());
+				magazzino.aggiungiMateriale(daAcquistare);			}
 		}
 	}
 	
@@ -67,14 +73,9 @@ public class RisorseMateriali extends RepartoAmministrativo {
 	 * @param codiceProdotto
 	 * @return restituisce il valore del prodotto scaricato dal magazzino 
 	 */
-	public double scaricaMateriale(String codiceProdotto) {
-		try {
-			MaterialeDaCostruzione rimosso = magazzino.rimuoviMateriale(codiceProdotto);
-			return rimosso.getValoreProdotto();
-		}
-		catch(ProdottoNonPresenteException e) {
-			return 0;
-		}
+	public MaterialeDaCostruzione scaricaMateriale(String codiceProdotto) {
+		MaterialeDaCostruzione rimosso = magazzino.rimuoviMateriale(codiceProdotto);
+		return rimosso;
 	}
 	
 	/**
@@ -83,5 +84,9 @@ public class RisorseMateriali extends RepartoAmministrativo {
 	 */
 	public void chiusuraContratto(double valore) {
 		aggiungiEntrate(valore + (valore / 100 * 35));
+	}
+	
+	public String toString() {
+		return getClass().getName() + "[Magazzino="+magazzino+", fornitori="+fornitori+"]";
 	}
 }

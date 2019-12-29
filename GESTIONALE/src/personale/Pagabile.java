@@ -11,4 +11,5 @@ public interface Pagabile {
 	
 	void paga();
 	void resetStatoPagamento();
+	boolean getStatoPagamento(); 
 }

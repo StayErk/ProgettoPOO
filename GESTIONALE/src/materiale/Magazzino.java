@@ -13,20 +13,20 @@ import eccezioni.ProdottoNonPresenteException;
 public class Magazzino<T extends MaterialeDaCostruzione> {
 	private int capacitaMax;
 	private int caricoAttuale;
-	private double valoreMagazzino;
 	private ArrayList<T> materiali;
 	
 	public Magazzino(int capacitaMax) {
 		this.capacitaMax = capacitaMax;
-		valoreMagazzino = 0;
+		materiali = new ArrayList<T>();
 	}
 	
 	public int getCapacitàMax() {
 		return capacitaMax;
 	}
 	
-	public double getValoreMagazzino() {
-		return valoreMagazzino;
+	
+	public int getCaricoAttuale() {
+		return caricoAttuale;
 	}
 	
 	/**
@@ -68,5 +68,9 @@ public class Magazzino<T extends MaterialeDaCostruzione> {
 			}
 		}
 		throw new ProdottoNonPresenteException();
+	}
+	
+	public String toString() {
+		return getClass().getName() + "[carico attuale="+caricoAttuale+", capacita max="+capacitaMax+", materiali in magazzino="+materiali+"]";
 	}
 }
