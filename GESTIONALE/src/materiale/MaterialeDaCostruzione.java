@@ -1,12 +1,14 @@
 package materiale;
 
+import java.io.Serializable;
+
 /**
  * Questa classe rappresenta il concetto di astratto di MaterialeDaCostruzione che poi verrà raffinata in categorie di prodotto.
  * Il materiale da costruzione è composto da un peso, un valore e un codiceProdotto
  * @author Andrea Ercolino
  *
  */
-public abstract class MaterialeDaCostruzione implements Cloneable {
+public abstract class MaterialeDaCostruzione implements Cloneable, Serializable {
 	private String codiceProdotto;
 	private double valore;
 	private int peso;

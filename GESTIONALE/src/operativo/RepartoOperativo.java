@@ -1,5 +1,6 @@
 package operativo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import amministrativo.RisorseUmane;
@@ -9,33 +10,30 @@ import personale.Responsabile;
 import utils.Estraibile;
 import amministrativo.RisorseMateriali;
 
-public class RepartoOperativo {
+public class RepartoOperativo implements Serializable{
 	private ArrayList<Cantiere> cantieri;
-	private RisorseUmane ru;
 	
-	public RepartoOperativo(RisorseUmane ru) {
+	public RepartoOperativo() {
 		cantieri = new ArrayList<Cantiere>();
-		this.ru = ru;
 	}
 	
-	public RisorseUmane getRisorseUmane() {
-		return ru;
-	}
 	
 	public ArrayList<Cantiere> getCantieriAperti(){
 		return cantieri;
 	}
 	
-	private void apriCantiere(double valoreIniziale, ArrayList<MaterialeDaCostruzione> materialiRichiesti, Responsabile capocantiere) {
+	
+	public void apriCantiere(double valoreIniziale, ArrayList<MaterialeDaCostruzione> materialiRichiesti, Responsabile capocantiere, String committente) {
 		double valoreMateriali = 0;
 		for(MaterialeDaCostruzione m: materialiRichiesti) {
 			valoreMateriali += m.getValoreProdotto();
 		}
 		double valoreCantiere = valoreIniziale + valoreMateriali;
-		Cantiere cantiere = new Cantiere(valoreCantiere, capocantiere);
+		Cantiere cantiere = new Cantiere(valoreCantiere, capocantiere, committente);
+		cantieri.add(cantiere);
 	}
 	
-	private void aggiungiSquadraACantiere(Cantiere cantiereDaModificare, Squadra team) {
+	public void aggiungiSquadraACantiere(Cantiere cantiereDaModificare, Squadra team) {
 		for(Cantiere c:cantieri) {
 			if(c.equals(cantiereDaModificare)) {
 				c.aggiungiSquadra(team);
@@ -43,12 +41,19 @@ public class RepartoOperativo {
 		}
 	}
 	
-	private double chiudiCantiere(Cantiere cantiereDaChiudere) {
+	public double chiudiCantiere(Cantiere cantiereDaChiudere) {
+		Cantiere daRimuovere = null;
 		for(Cantiere c:cantieri) {
 			if(c.equals(cantiereDaChiudere)) {
-				return c.chiusuraCantiere();
+				daRimuovere = c;
 			}
 		}
+		if(daRimuovere != null) cantieri.remove(cantieri.indexOf(daRimuovere));
 		return 0;
+	}
+	
+	
+	public String toString() {
+		return getClass().getName()+"[cantieri="+cantieri+"]";
 	}
 }

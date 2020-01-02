@@ -106,5 +106,9 @@ public class RisorseUmane extends RepartoAmministrativo {
 		return estratto;
 	}
 	
+	public String toString() {
+		return getClass().getName()+"[personale="+personale+"]";
+	}
+	
 	
 }

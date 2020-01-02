@@ -1,22 +1,22 @@
 package operativo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import personale.Dipendente;
-import personale.Responsabile;
+import personale.Quadro;
 import utils.Estraibile;
-public class Squadra {
-	private Responsabile caposquadra;
+public class Squadra implements Serializable {
+	private Quadro caposquadra;
 	private ArrayList<Dipendente> gruppo;
 	
-	public Squadra(Responsabile caposquadra) { 
-		Dipendente d = (Dipendente) caposquadra;
-		if (d.getStato()) throw new IllegalArgumentException();
+	public Squadra(Quadro caposquadra) { 
+		if (caposquadra.getStato()) throw new IllegalArgumentException();
 		this.caposquadra = caposquadra;
 		gruppo = new ArrayList<Dipendente>();
 	}
 	
-	public Responsabile getCaposquadra() {
+	public Quadro getCaposquadra() {
 		return caposquadra;
 	}
 	
@@ -38,16 +38,14 @@ public class Squadra {
 	}
 	
 	public void impegnaSquadra() {
-		Dipendente d = (Dipendente) caposquadra;
-		d.impegnaDipendente();
+		caposquadra.impegnaDipendente();
 		for(Dipendente dip:gruppo) {
 			dip.impegnaDipendente();
 		}
 	}
 	
 	public void liberaSquadra() {
-		Dipendente d = (Dipendente) caposquadra;
-		d.liberaDipendente();
+		caposquadra.liberaDipendente();
 		for(Dipendente dip:gruppo) {
 			dip.liberaDipendente();
 		}

@@ -30,7 +30,7 @@ public class TesterRisorseMateriali {
 		f1.aggiungiProdotto(new Betoniera("bet3", 250, 80, 15));
 		f1.aggiungiProdotto(new Betoniera("bet4", 250, 90, 15));
 		
-		Cantiere c = new Cantiere(3500, new Quadro("Andrea", "Ercolino", 3));
+		Cantiere c = new Cantiere(3500, new Quadro("Andrea", "Ercolino", 3), "Pedro");
 		
 		
 		System.out.println("Instanzio un magazzino con capacità max 500 (mag)");

@@ -1,5 +1,6 @@
 package materiale;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import eccezioni.CapacitaSuperataException;
 import eccezioni.ProdottoNonPresenteException;
@@ -10,7 +11,7 @@ import eccezioni.ProdottoNonPresenteException;
  * @author Andrea Ercolino
  *
  */
-public class Magazzino<T extends MaterialeDaCostruzione> {
+public class Magazzino<T extends MaterialeDaCostruzione> implements Serializable{
 	private int capacitaMax;
 	private int caricoAttuale;
 	private ArrayList<T> materiali;

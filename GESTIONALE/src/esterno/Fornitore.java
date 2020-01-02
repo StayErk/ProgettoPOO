@@ -1,5 +1,7 @@
 package esterno;
 import materiale.MaterialeDaCostruzione;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -11,7 +13,7 @@ import eccezioni.ProdottoNonPresenteException;
  *
  */
 
-public class Fornitore<T extends MaterialeDaCostruzione> {
+public class Fornitore<T extends MaterialeDaCostruzione> implements Serializable {
 	private String nome;
 	private ArrayList<T> catalogo;
 	

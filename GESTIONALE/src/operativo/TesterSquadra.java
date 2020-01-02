@@ -1,10 +1,12 @@
 package operativo;
 
+import java.io.Serializable;
+
 import personale.Dirigente;
 import personale.Operaio;
 import personale.Quadro;
 
-public class TesterSquadra {
+public class TesterSquadra implements Serializable{
 	public static void main(String[] args) {
 		System.out.println("Instanzio quattro oggetti del tipo dipendente: (p1), (p2), (p3), (p4)");
 		Operaio p1 = new Operaio("Franco", "Battiato");
