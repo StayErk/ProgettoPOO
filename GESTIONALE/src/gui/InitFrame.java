@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 
 import amministrativo.RepartoAmministrativo;
 import amministrativo.RisorseMateriali;
@@ -45,17 +47,21 @@ public class InitFrame extends JFrame {
 		RepartoOperativo ro = new RepartoOperativo();
 		i = new Impresa(rm, ru, ro);
 		
-		setVisible(true);
+		add(createButtonSection());
 		setTitle("Melenzanetti");
 		setSize(950, 550);
 		
 	}
 	
+	private JPanel createButtonSection() {
+		JPanel p = new JPanel();
+		p.setLayout(new GridLayout(2, 2));
+		p.add(bottoneCantieri);
+		return p;
+	}
+	
 	private JMenu createFileMenu() {
 		JMenu file = new JMenu("File");
-		file.add(createOpenFileItem());
-		file.add(createSaveFileItem());
-		file.add(createSaveAsFileItem());
 		file.add(createExitItem());
 		return file;
 	}
@@ -73,14 +79,5 @@ public class InitFrame extends JFrame {
 		return item;
 	}
 	
-	private JMenuItem createOpenFileItem() {
-		JMenuItem item = new JMenuItem("Open");
-		class MenuItemListner implements ActionListener{
-
-			public void actionPerformed(ActionEvent arg0) {
-				
-			}
-			
-		}
-	}
+	
 }

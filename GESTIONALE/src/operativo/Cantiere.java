@@ -4,6 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import personale.*;
 
+/**
+ * La Classe cantiere rappresenta il concetto astratto di cantiere. Caratterizzato da un valore, un  Responsabile, un insieme di squadre
+ * e il nomitavo del cliente che l'ha commissionato. 
+ * @author Andrea Ercolino
+ *
+ */
 public class Cantiere implements Serializable{
 	private double valore;
 	private Responsabile capocantiere;
@@ -41,12 +47,21 @@ public class Cantiere implements Serializable{
 	public String getCliente() {
 		return cliente;
 	}
-	
+	/**
+	 * Aggiunge una squadra all'insieme di squadre che lavorano al cantiere. Una volta aggiunta tutti i dipendenti che 
+	 * si trovano all'interno della squadra risulteranno impegnati
+	 * @param team
+	 */
 	public void aggiungiSquadra(Squadra team) {
 		team.impegnaSquadra();
 		squadre.add(team);
 	}
 	
+	/**
+	 * Effettua la procedura di chiusura di un cantiere. Libera i dipendenti di tutte le squadre che hanno lavorato al cantiere e il Responsabile del cantiere
+	 * 
+	 * @return restituisce il valore del cantiere chiuso
+	 */
 	public double chiusuraCantiere() {
 		Dipendente d = (Dipendente) capocantiere;
 		d.liberaDipendente();

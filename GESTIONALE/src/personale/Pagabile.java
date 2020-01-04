@@ -1,6 +1,8 @@
 package personale;
 
-public interface Pagabile {
+import java.io.Serializable;
+
+public interface Pagabile extends Serializable{
 	final static double STIPENDIO_DIRIGENTE = 2800;
 	final static double STIPENDIO_QUADRO = 200;
 	final static double STIPENDIO_IMPIEGATOFT = 1750;

@@ -1,5 +1,7 @@
 package personale;
 
-public interface Responsabile {
+import java.io.Serializable;
+
+public interface Responsabile extends Serializable{
 
 }

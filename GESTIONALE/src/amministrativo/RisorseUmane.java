@@ -67,8 +67,8 @@ public class RisorseUmane extends RepartoAmministrativo {
 	}
 	
 	/**
-	 * Azzera lo stato di pagamento di un dato tipo di dipendenti, in modo che possano essere pagati.
-	 * @param tipoDipendenti tipo di dipendenti di cui si vuole azzerare il mese fiscale
+	 * Azzera lo stato di pagamento di un dato tipo di dipendenti, in modo che possano essere pagati in futuro.
+	 * @param criterio criterio di scelta per selezionare i dipendenti da pagare
 	 */
 	public void nuovoMeseFiscale(Estraibile<Dipendente> criterio) {
 		ArrayList<Dipendente> daResettare =scegliDipendenti(criterio);
@@ -86,7 +86,7 @@ public class RisorseUmane extends RepartoAmministrativo {
 	}
 	
 	/**
-	 * Data la matricola di un dipendente lo licenzia se si trova nella lista del personale libero
+	 * Data la matricola di un dipendente lo licenzia se si trova nella lista del personale
 	 * @param matricolaDipendente matricola del dipendente da licenziare
 	 */
 	public void licenzia(int matricolaDipendente) {
@@ -99,6 +99,13 @@ public class RisorseUmane extends RepartoAmministrativo {
 			personale.remove(daRimuovere);
 	}
 	
+	/**
+	 * Dato un criterio di scelta restituisce una lista di dipendenti che rispettano quel criterio
+	 * Precondizioni: nessuna
+	 * Postcondizioni: viene restituita una lista di grandezza maggiore uguale a zero
+	 * @param criterio crtierio di scelta per selezionare i dipendenti da pagare
+	 * @return
+	 */
 	public ArrayList<Dipendente> scegliDipendenti(Estraibile<Dipendente> criterio){
 		ArrayList<Dipendente> estratto = new ArrayList<Dipendente>();
 		Estrattore<Dipendente> estrattore = new Estrattore<Dipendente>(personale, criterio);

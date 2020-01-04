@@ -1,5 +1,11 @@
 package personale;
 
+/**
+ * Questa classe rappresenta il concetto di Dipendete. Caratterizzato dalle generalità, una matricola univoca e il suo stato:
+ * Se è stato pagato, e se è impegnato a lavoro in un cantiere
+ * @author Andrea Ercolino
+ *
+ */
 public abstract class Dipendente implements Pagabile, Cloneable{
 	private String nome;
 	private String cognome;

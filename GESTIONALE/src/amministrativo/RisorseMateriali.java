@@ -1,6 +1,10 @@
 package amministrativo;
 
 import materiale.*;
+import personale.Dipendente;
+import utils.Estraibile;
+import utils.Estrattore;
+
 import java.util.ArrayList;
 
 import eccezioni.CapacitaSuperataException;
@@ -34,6 +38,8 @@ public class RisorseMateriali extends RepartoAmministrativo {
 	
 	/**
 	 * Questo metodo permette di aggiungere un fornitore alla lista dei fornitori che rifoniscono l'azienda
+	 * Precondizione: il fornitore non deve essere presente nella lista
+	 * Postcondizione: il fornitore vienie aggiunto alla lista dei fornitori
 	 * @param daAggiungere il Fornitore da aggiungere alla lista
 	 */
 	public void aggiungiFornitore(Fornitore daAggiungere) {
@@ -43,11 +49,13 @@ public class RisorseMateriali extends RepartoAmministrativo {
 	
 	/**
 	 * Questo metodo permette di rimuovere un fornitore dalla lista dei fornitori che riforniscono l'azienda
+	 * Precondizione: Rimuove un fornitore dalla lista dei fornitori se questo è presente
+	 * Postcondizione: la lista non conterrà più quel fornitore
 	 * @param daRimuovere il Fornitore da rimuovere dalla lista
 	 */
 	public void rimuoviFornitore(Fornitore daRimuovere) {
 		if(fornitori.contains(daRimuovere)) {
-			fornitori.remove(daRimuovere);
+			 fornitori.remove(daRimuovere);
 		}
 	}
 	
@@ -71,11 +79,18 @@ public class RisorseMateriali extends RepartoAmministrativo {
 	/**
 	 * Questo metodo permette di togliere un prodotto dal magazzino del caso in cui questo serva  ad un cantiere.
 	 * @param codiceProdotto
-	 * @return restituisce il valore del prodotto scaricato dal magazzino 
+	 * @return il MaterialeDaCostruzione scaricato dal magazzino. 
 	 */
 	public MaterialeDaCostruzione scaricaMateriale(String codiceProdotto) {
 		MaterialeDaCostruzione rimosso = magazzino.rimuoviMateriale(codiceProdotto);
 		return rimosso;
+	}
+	
+	public ArrayList<MaterialeDaCostruzione> scegliMateriale(Estraibile<MaterialeDaCostruzione> criterio) {
+		ArrayList<MaterialeDaCostruzione> estratto = new ArrayList<MaterialeDaCostruzione>();
+		Estrattore<MaterialeDaCostruzione> estrattore = new Estrattore<MaterialeDaCostruzione>(magazzino.getMaterialiInMagazzino(), criterio);
+		estratto = estrattore.estrai();
+		return estratto;
 	}
 	
 	/**

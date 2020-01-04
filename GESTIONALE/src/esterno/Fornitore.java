@@ -9,7 +9,7 @@ import eccezioni.ProdottoNonPresenteException;
 
 /**
  * Questa classe rappresenta il concetto di Fornitore. Un fornitore ha un nome ed una catalogo (insieme) di Materiali Da Costruzione. 
- * @author stayerk
+ * @author Andrea Ercolino
  *
  */
 
@@ -33,6 +33,8 @@ public class Fornitore<T extends MaterialeDaCostruzione> implements Serializable
 	
 	/**
 	 * Questo metodo permette di aggiungere un prodotto al catalogo.
+	 * Precondizioni:
+	 * Postcondizioni: la grandezza del catalogo nell'istante t è uguale alla grandezza del catalago nell'istante t-1 + 1
 	 * @param daAggiungere Materiale da Costruzione che deve essere aggiunto al Catalogo
 	 */
 	public void aggiungiProdotto(T daAggiungere) {
