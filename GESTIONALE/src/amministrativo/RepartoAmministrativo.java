@@ -11,9 +11,11 @@ import java.io.Serializable;
  */
 public abstract class RepartoAmministrativo implements Serializable{
 	private static double capitale;
+	private double capitaleEffettivo;
 	
 	public RepartoAmministrativo(double capitaleIniziale) {
 		capitale = capitaleIniziale;
+		capitaleEffettivo = capitale;
 	}
 	
 	/**
@@ -25,6 +27,7 @@ public abstract class RepartoAmministrativo implements Serializable{
 	public void aggiungiEntrate(double guadagno) {
 		if(guadagno < 0) throw new IllegalArgumentException();
 		capitale += guadagno;
+		capitaleEffettivo = capitale;
 	}
 	
 	/**
@@ -36,6 +39,7 @@ public abstract class RepartoAmministrativo implements Serializable{
 	public void effettuaSpesa(double spesa) {
 		if(spesa < 0) throw new IllegalArgumentException();
 		capitale -= spesa;
+		capitaleEffettivo = capitale;
 	}
 	
 	/**
@@ -43,7 +47,8 @@ public abstract class RepartoAmministrativo implements Serializable{
 	 * @return il capitale attuale dell'impresa
 	 */
 	public double getCapitale() {
-		return capitale;
+		return capitaleEffettivo;
+		
 	}
 	
 }

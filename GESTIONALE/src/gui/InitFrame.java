@@ -24,6 +24,7 @@ import amministrativo.RisorseMateriali;
 import amministrativo.RisorseUmane;
 import materiale.Magazzino;
 import materiale.MaterialeDaCostruzione;
+import operativo.Cantiere;
 import operativo.RepartoOperativo;
 import utils.Impresa;
 import utils.SalvaLeggiImpresa;
@@ -65,8 +66,9 @@ public class InitFrame extends JFrame {
 		
 		input = new JTextField(8);
 		capacitaMagazzino = new JTextField(8);
+		capacitaMagazzino.setEditable(false);
 		capitaleIniziale = new JTextField(8);
-		
+		capitaleIniziale.setEditable(false);
 		capitaleAzienda = new JLabel("capitale dell'azienda: ");
 		prossimiProfitti = new JLabel("Profitti futuri: ");
 		
@@ -201,11 +203,24 @@ public class InitFrame extends JFrame {
 				if(salva.isSelected()) {
 					SalvaLeggiImpresa salva = new SalvaLeggiImpresa(i);
 					salva.SalvaImpresa(input.getText());
+					capitaleAzienda.setText("Capitale dell'azienda: " + i.getRisorseUmane().getCapitale());
+					double valoreCantieriAperti = 0;
+					for(Cantiere c: i.getRepartoOperativo().getCantieriAperti()) {
+						valoreCantieriAperti += c.getValoreCantiere();
+					}
+					prossimiProfitti.setText("Prossimi profitti: " + valoreCantieriAperti);
 				}
 				else if (carica.isSelected()) {
 					SalvaLeggiImpresa salva = new SalvaLeggiImpresa(i);
 					salva.CaricaImpresa(input.getText());
 					i = salva.getImpresa();
+					System.out.println(i.getRisorseUmane().getCapitale());
+					capitaleAzienda.setText("Capitale dell'azienda: " + i.getRisorseUmane().getCapitale());
+					double valoreCantieriAperti = 0;
+					for(Cantiere c: i.getRepartoOperativo().getCantieriAperti()) {
+						valoreCantieriAperti += c.getValoreCantiere();
+					}
+					prossimiProfitti.setText("Prossimi profitti: " + valoreCantieriAperti);
 				}
 				else {
 					try {

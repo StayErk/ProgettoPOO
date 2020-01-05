@@ -231,9 +231,7 @@ public class GUIAmministrativo extends JFrame {
 		class Click implements ActionListener{
 
 			public void actionPerformed(ActionEvent arg0) {
-				for(Dipendente d : selezionatiDipendenti) {
-					ru.nuovoMeseFiscale(criterioRU);
-				}
+				ru.nuovoMeseFiscale(criterioRU);
 			}
 			
 		}
@@ -724,9 +722,6 @@ public class GUIAmministrativo extends JFrame {
 						criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Quadro") || p.getClass().getSimpleName().equals("Impiegato") || p.getClass().getSimpleName().equals("Operaio")) && !p.getStato() && !p.getStatoPagamento();
 					}
 				}
-			
-			selezionatiDipendenti = ru.scegliDipendenti(criterioRU);
-			System.out.println(selezionatiDipendenti);
 			}
 				
 			
@@ -741,6 +736,9 @@ public class GUIAmministrativo extends JFrame {
 			if (perNome.isSelected()) {
 				if(input3.getText().equals("")) criterioRU = (p) -> true;
 				criterioRU = (p) -> p.getNome().contains(input3.getText()) || p.getCognome().contains(input3.getText());
+				selezionatiDipendenti = ru.scegliDipendenti(criterioRU);
+			}
+			else {
 				selezionatiDipendenti = ru.scegliDipendenti(criterioRU);
 			}
 			areaPersonale.setText("Assunti in azienda: " + ru.getPersonale().size() + ", corrispondenti al report: " + selezionatiDipendenti.size()+"\n\n");
