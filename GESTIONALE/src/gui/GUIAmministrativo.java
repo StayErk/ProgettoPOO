@@ -1,6 +1,9 @@
 package gui;
 
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -17,7 +20,10 @@ import javax.swing.border.TitledBorder;
 
 import amministrativo.RisorseMateriali;
 import amministrativo.RisorseUmane;
+import materiale.MaterialeDaCostruzione;
 import operativo.RepartoOperativo;
+import personale.Dipendente;
+import utils.Estraibile;
 import utils.Impresa;
 
 public class GUIAmministrativo extends JFrame {
@@ -55,6 +61,9 @@ public class GUIAmministrativo extends JFrame {
 	private RisorseUmane ru;
 	private RisorseMateriali rm;
 	private RepartoOperativo ro;
+	
+	Estraibile<Dipendente> criterioRU;
+	Estraibile<MaterialeDaCostruzione> criterioRM;
 	
 	public GUIAmministrativo(Impresa i) {
 		this.i = i;
@@ -142,6 +151,7 @@ public class GUIAmministrativo extends JFrame {
 	
 	private JPanel createButtonReport() {
 		JPanel p = new JPanel();
+		report.addActionListener(new ReportUmano());
 		p.add(report);
 		return p;
 	}
@@ -289,5 +299,205 @@ public class GUIAmministrativo extends JFrame {
 		JPanel p = new JPanel();
 		p.add(refreshButton);
 		return p;
+	}
+	
+	private class ReportMateriale implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
+	private class ReportUmano implements ActionListener{
+
+		public void actionPerformed(ActionEvent arg0) {
+			if (pagati.isSelected() && impegniati.isSelected()) {
+				if(dirigenti.isSelected() && !quadri.isSelected() && !impiegati.isSelected() && !operai.isSelected()) {
+					criterioRU = (p)->p.getClass().getSimpleName().equals("Dirigente") && p.getStato() && p.getStatoPagamento();
+				}
+				else if (quadri.isSelected() && !dirigenti.isSelected() && !impiegati.isSelected() && !operai.isSelected()) {
+					criterioRU = (p)->p.getClass().getSimpleName().equals("Quadro") && p.getStato() && p.getStatoPagamento();
+				}
+				else if (impiegati.isSelected() && !dirigenti.isSelected() && !quadri.isSelected() && !operai.isSelected()) {
+					criterioRU = (p)->p.getClass().getSimpleName().equals("Impiegato") && p.getStato() && p.getStatoPagamento();
+				}
+				else if (operai.isSelected() && !dirigenti.isSelected() && !impiegati.isSelected() && !quadri.isSelected()) {
+					criterioRU = (p)->p.getClass().getSimpleName().equals("Operaio") && p.getStato() && p.getStatoPagamento();
+				}
+				else if (dirigenti.isSelected() && quadri.isSelected() && !impiegati.isSelected() && !operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Quadro")) && p.getStato() && p.getStatoPagamento();
+				}
+				else if (dirigenti.isSelected() && !quadri.isSelected() && impiegati.isSelected() && !operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Impiegato")) && p.getStato() && p.getStatoPagamento();
+				}
+				else if (dirigenti.isSelected() && !quadri.isSelected() && !impiegati.isSelected() && operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Operaio")) && p.getStato() && p.getStatoPagamento();
+				}
+				else if (!dirigenti.isSelected() && quadri.isSelected() && impiegati.isSelected() && !operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Quadro") || p.getClass().getSimpleName().equals("Impiegato")) && p.getStato() && p.getStatoPagamento();
+				}
+				else if (!dirigenti.isSelected() && quadri.isSelected() && !impiegati.isSelected() && operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Quadro") || p.getClass().getSimpleName().equals("Operaio")) && p.getStato() && p.getStatoPagamento();
+				}
+				else if (!dirigenti.isSelected() && !quadri.isSelected() && impiegati.isSelected() && operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Impiegato") || p.getClass().getSimpleName().equals("Operaio")) && p.getStato() && p.getStatoPagamento();
+				}
+				else if (dirigenti.isSelected() && quadri.isSelected() && impiegati.isSelected() && !operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Quadro") || p.getClass().getSimpleName().equals("Impiegato")) && p.getStato() && p.getStatoPagamento();
+				}
+				else if (dirigenti.isSelected() && !quadri.isSelected() && impiegati.isSelected() && operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Impiegato") || p.getClass().getSimpleName().equals("Operaio")) && p.getStato() && p.getStatoPagamento();
+				}
+				else if (!dirigenti.isSelected() && quadri.isSelected() && impiegati.isSelected() && operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Quadro") || p.getClass().getSimpleName().equals("Impiegato") || p.getClass().getSimpleName().equals("Operaio")) && p.getStato() && p.getStatoPagamento();
+				}
+				else if (dirigenti.isSelected() && quadri.isSelected() && impiegati.isSelected() && operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Quadro") || p.getClass().getSimpleName().equals("Impiegato") || p.getClass().getSimpleName().equals("Operaio")) && p.getStato() && p.getStatoPagamento();
+				}
+			}
+			else if (pagati.isSelected() && liberi.isSelected()) {
+				if(dirigenti.isSelected() && !quadri.isSelected() && !impiegati.isSelected() && !operai.isSelected()) {
+					criterioRU = (p)->p.getClass().getSimpleName().equals("Dirigente") && !p.getStato() && p.getStatoPagamento();
+				}
+				else if (quadri.isSelected() && !dirigenti.isSelected() && !impiegati.isSelected() && !operai.isSelected()) {
+					criterioRU = (p)->p.getClass().getSimpleName().equals("Quadro") && !p.getStato() && p.getStatoPagamento();
+				}
+				else if (impiegati.isSelected() && !dirigenti.isSelected() && !quadri.isSelected() && !operai.isSelected()) {
+					criterioRU = (p)->p.getClass().getSimpleName().equals("Impiegato") && !p.getStato() && p.getStatoPagamento();
+				}
+				else if (operai.isSelected() && !dirigenti.isSelected() && !impiegati.isSelected() && !quadri.isSelected()) {
+					criterioRU = (p)->p.getClass().getSimpleName().equals("Operaio") && !p.getStato() && p.getStatoPagamento();
+				}
+				else if (dirigenti.isSelected() && quadri.isSelected() && !impiegati.isSelected() && !operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Quadro")) && !p.getStato() && p.getStatoPagamento();
+				}
+				else if (dirigenti.isSelected() && !quadri.isSelected() && impiegati.isSelected() && !operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Impiegato")) && !p.getStato() && p.getStatoPagamento();
+				}
+				else if (dirigenti.isSelected() && !quadri.isSelected() && !impiegati.isSelected() && operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Operaio")) && !p.getStato() && p.getStatoPagamento();
+				}
+				else if (!dirigenti.isSelected() && quadri.isSelected() && impiegati.isSelected() && !operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Quadro") || p.getClass().getSimpleName().equals("Impiegato")) && !p.getStato() && p.getStatoPagamento();
+				}
+				else if (!dirigenti.isSelected() && quadri.isSelected() && !impiegati.isSelected() && operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Quadro") || p.getClass().getSimpleName().equals("Operaio")) && !p.getStato() && p.getStatoPagamento();
+				}
+				else if (!dirigenti.isSelected() && !quadri.isSelected() && impiegati.isSelected() && operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Impiegato") || p.getClass().getSimpleName().equals("Operaio")) && !p.getStato() && p.getStatoPagamento();
+				}
+				else if (dirigenti.isSelected() && quadri.isSelected() && impiegati.isSelected() && !operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Quadro") || !p.getClass().getSimpleName().equals("Impiegato")) && p.getStato() && p.getStatoPagamento();
+				}
+				else if (dirigenti.isSelected() && !quadri.isSelected() && impiegati.isSelected() && operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Impiegato") || !p.getClass().getSimpleName().equals("Operaio")) && p.getStato() && p.getStatoPagamento();
+				}
+				else if (!dirigenti.isSelected() && quadri.isSelected() && impiegati.isSelected() && operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Quadro") || p.getClass().getSimpleName().equals("Impiegato") || !p.getClass().getSimpleName().equals("Operaio")) && p.getStato() && p.getStatoPagamento();
+				}
+				else if (dirigenti.isSelected() && quadri.isSelected() && impiegati.isSelected() && operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Quadro") || !p.getClass().getSimpleName().equals("Impiegato") || p.getClass().getSimpleName().equals("Operaio")) && p.getStato() && p.getStatoPagamento();
+				}
+			}
+			else if (nonPagati.isSelected() && impegniati.isSelected()) {
+				if(dirigenti.isSelected() && !quadri.isSelected() && !impiegati.isSelected() && !operai.isSelected()) {
+					criterioRU = (p)->p.getClass().getSimpleName().equals("Dirigente") && p.getStato() && !p.getStatoPagamento();
+				}
+				else if (quadri.isSelected() && !dirigenti.isSelected() && !impiegati.isSelected() && !operai.isSelected()) {
+					criterioRU = (p)->p.getClass().getSimpleName().equals("Quadro") && p.getStato() && !p.getStatoPagamento();
+				}
+				else if (impiegati.isSelected() && !dirigenti.isSelected() && !quadri.isSelected() && !operai.isSelected()) {
+					criterioRU = (p)->p.getClass().getSimpleName().equals("Impiegato") && p.getStato() && !p.getStatoPagamento();
+				}
+				else if (operai.isSelected() && !dirigenti.isSelected() && !impiegati.isSelected() && !quadri.isSelected()) {
+					criterioRU = (p)->p.getClass().getSimpleName().equals("Operaio") && p.getStato() && !p.getStatoPagamento();
+				}
+				else if (dirigenti.isSelected() && quadri.isSelected() && !impiegati.isSelected() && !operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Quadro")) && p.getStato() && !p.getStatoPagamento();
+				}
+				else if (dirigenti.isSelected() && !quadri.isSelected() && impiegati.isSelected() && !operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Impiegato")) && p.getStato() && !p.getStatoPagamento();
+				}
+				else if (dirigenti.isSelected() && !quadri.isSelected() && !impiegati.isSelected() && operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Operaio")) && p.getStato() && !p.getStatoPagamento();
+				}
+				else if (!dirigenti.isSelected() && quadri.isSelected() && impiegati.isSelected() && !operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Quadro") || p.getClass().getSimpleName().equals("Impiegato")) && p.getStato() && !p.getStatoPagamento();
+				}
+				else if (!dirigenti.isSelected() && quadri.isSelected() && !impiegati.isSelected() && operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Quadro") || p.getClass().getSimpleName().equals("Operaio")) && p.getStato() && !p.getStatoPagamento();
+				}
+				else if (!dirigenti.isSelected() && !quadri.isSelected() && impiegati.isSelected() && operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Impiegato") || p.getClass().getSimpleName().equals("Operaio")) && p.getStato() && !p.getStatoPagamento();
+				}
+				else if (dirigenti.isSelected() && quadri.isSelected() && impiegati.isSelected() && !operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Quadro") || p.getClass().getSimpleName().equals("Impiegato")) && p.getStato() && !p.getStatoPagamento();
+				}
+				else if (dirigenti.isSelected() && !quadri.isSelected() && impiegati.isSelected() && operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Impiegato") || p.getClass().getSimpleName().equals("Operaio")) && p.getStato() && !p.getStatoPagamento();
+				}
+				else if (!dirigenti.isSelected() && quadri.isSelected() && impiegati.isSelected() && operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Quadro") || p.getClass().getSimpleName().equals("Impiegato") || p.getClass().getSimpleName().equals("Operaio")) && p.getStato() && !p.getStatoPagamento();
+				}
+				else if (dirigenti.isSelected() && quadri.isSelected() && impiegati.isSelected() && operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Quadro") || p.getClass().getSimpleName().equals("Impiegato") || p.getClass().getSimpleName().equals("Operaio")) && p.getStato() && !p.getStatoPagamento();
+				}
+			}
+			else if (nonPagati.isSelected() && liberi.isSelected()) {
+				if(dirigenti.isSelected() && !quadri.isSelected() && !impiegati.isSelected() && !operai.isSelected()) {
+					criterioRU = (p)->p.getClass().getSimpleName().equals("Dirigente") && !p.getStato() && !p.getStatoPagamento();
+				}
+				else if (quadri.isSelected() && !dirigenti.isSelected() && !impiegati.isSelected() && !operai.isSelected()) {
+					criterioRU = (p)->p.getClass().getSimpleName().equals("Quadro") && !p.getStato() && !p.getStatoPagamento();
+				}
+				else if (impiegati.isSelected() && !dirigenti.isSelected() && !quadri.isSelected() && !operai.isSelected()) {
+					criterioRU = (p)->p.getClass().getSimpleName().equals("Impiegato") && !p.getStato() && !p.getStatoPagamento();
+				}
+				else if (operai.isSelected() && !dirigenti.isSelected() && !impiegati.isSelected() && !quadri.isSelected()) {
+					criterioRU = (p)->p.getClass().getSimpleName().equals("Operaio") && !p.getStato() && !p.getStatoPagamento();
+				}
+				else if (dirigenti.isSelected() && quadri.isSelected() && !impiegati.isSelected() && !operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Quadro")) && !p.getStato() && !p.getStatoPagamento();
+				}
+				else if (dirigenti.isSelected() && !quadri.isSelected() && impiegati.isSelected() && !operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Impiegato")) && !p.getStato() && !p.getStatoPagamento();
+				}
+				else if (dirigenti.isSelected() && !quadri.isSelected() && !impiegati.isSelected() && operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Operaio")) && !p.getStato() && !p.getStatoPagamento();
+				}
+				else if (!dirigenti.isSelected() && quadri.isSelected() && impiegati.isSelected() && !operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Quadro") || p.getClass().getSimpleName().equals("Impiegato")) && !p.getStato() && !p.getStatoPagamento();
+				}
+				else if (!dirigenti.isSelected() && quadri.isSelected() && !impiegati.isSelected() && operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Quadro") || p.getClass().getSimpleName().equals("Operaio")) && !p.getStato() && !p.getStatoPagamento();
+				}
+				else if (!dirigenti.isSelected() && !quadri.isSelected() && impiegati.isSelected() && operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Impiegato") || p.getClass().getSimpleName().equals("Operaio")) && !p.getStato() && !p.getStatoPagamento();
+				}
+				else if (dirigenti.isSelected() && quadri.isSelected() && impiegati.isSelected() && !operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Quadro") || p.getClass().getSimpleName().equals("Impiegato")) && !p.getStato() && !p.getStatoPagamento();
+				}
+				else if (dirigenti.isSelected() && !quadri.isSelected() && impiegati.isSelected() && operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Impiegato") || p.getClass().getSimpleName().equals("Operaio")) && !p.getStato() && !p.getStatoPagamento();
+				}
+				else if (!dirigenti.isSelected() && quadri.isSelected() && impiegati.isSelected() && operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Quadro") || p.getClass().getSimpleName().equals("Impiegato") || p.getClass().getSimpleName().equals("Operaio")) && !p.getStato() && !p.getStatoPagamento();
+				}
+				else if (dirigenti.isSelected() && quadri.isSelected() && impiegati.isSelected() && operai.isSelected()) {
+					criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Quadro") || p.getClass().getSimpleName().equals("Impiegato") || p.getClass().getSimpleName().equals("Operaio")) && !p.getStato() && !p.getStatoPagamento();
+				}
+			}
+			
+			ArrayList<Dipendente> selezionati = ru.scegliDipendenti(criterioRU);
+			areaPersonale.setText("");
+			for(Dipendente d:selezionati) {
+				areaPersonale.append(d.getClass().getSimpleName() + ": " + d.getCognome() + " " + d.getNome() + " con matricola: " + d.getMatricolaDipendente() + " impegnato: " + d.getStato() + " pagato: " + d.getStatoPagamento() +"\n");
+			}
+			
+		}
+		
 	}
 }
