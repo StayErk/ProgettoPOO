@@ -74,6 +74,7 @@ public class RepartoOperativo implements Serializable{
 			}
 		}
 		if(daRimuovere == null) throw new IllegalArgumentException(); 
+		daRimuovere.chiusuraCantiere();
 		cantieri.remove(cantieri.indexOf(daRimuovere));
 		return daRimuovere.getValoreCantiere();
 		

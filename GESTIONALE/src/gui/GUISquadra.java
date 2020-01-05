@@ -88,7 +88,7 @@ public class GUISquadra extends JFrame {
 	private JPanel operaiPanel() {
 		JPanel p = new JPanel();
 		p.setLayout(new GridLayout(1, 2));
-		p.add(new JLabel("Scegli Oparai:"));
+		p.add(new JLabel("Scegli Operai:"));
 		p.add(operaiComboBox);
 		return p;
 	}
@@ -100,14 +100,16 @@ public class GUISquadra extends JFrame {
 
 			public void actionPerformed(ActionEvent arg0) {
 				Operaio o = null;
+				int index = -1;
 				for (Dipendente d: ru.scegliDipendenti(criterioOperai)) {
 					o = (Operaio) d;
 					if(operaiComboBox.getSelectedItem().equals(o.getNome() + " " + o.getCognome())) {
-						operaiComboBox.removeItemAt(operaiComboBox.getSelectedIndex());
+						index = operaiComboBox.getSelectedIndex();
 						dipendetiSelezionati.append(operaiComboBox.getSelectedItem()+"\n");
 						operai.add(o);
 					}
 				}
+				if(index != -1) operaiComboBox.removeItemAt(index);
 			}
 			
 		}

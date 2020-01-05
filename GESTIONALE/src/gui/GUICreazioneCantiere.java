@@ -185,20 +185,22 @@ public class GUICreazioneCantiere extends JFrame {
 		class Click implements ActionListener{
 
 			public void actionPerformed(ActionEvent arg0) {
+				int index = -1;
+				boolean flag = false;
 				for (MaterialeDaCostruzione d: rm.scegliMateriale(criterioMateriale)) {
-					if(materialiDaScegliere.getSelectedItem().equals(d.getCodiceProdotto() + " " + d.getPeso() + " " + d.getValoreProdotto())) {
+					if(materialiDaScegliere.getSelectedItem().equals(d.getCodiceProdotto() + " " + d.getPeso() + " " + d.getValoreProdotto()) && !flag) {
 						System.out.println(d+"\n");
-						materialiDaScegliere.removeItemAt(materialiDaScegliere.getSelectedIndex());
+						index = materialiDaScegliere.getSelectedIndex();
 						materialiAggiunti.append(d.getCodiceProdotto() + " " + d.getPeso() + " " + d.getValoreProdotto()+"\n");
 						materiali.add(d);
 						valoreCantiere += d.getValoreProdotto();
 						valoreTotaleCantiere.setText("Valore totale Cantiere: " + valoreCantiere);
-						
+						flag = true;
 						rm.scaricaMateriale(d.getCodiceProdotto());
 						System.out.println("array: " +materiali);
 					}
 				}
-				
+				if (index != -1) materialiDaScegliere.removeItemAt(index);
 			}
 			
 		}

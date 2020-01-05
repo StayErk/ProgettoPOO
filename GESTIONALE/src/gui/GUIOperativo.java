@@ -117,15 +117,18 @@ public class GUIOperativo extends JFrame{
 			public void actionPerformed(ActionEvent arg0) {
 				if (chiudiCantiere.isSelected())
 				{
-					Cantiere c = null;
+					Cantiere daChiudere = null;
 					for(Cantiere ca :ro.getCantieriAperti()) {
 						Dipendente d = (Dipendente) ca.getCapocantiere();
 						if(cantieriComboBox.getSelectedItem().equals("Dirigente: " + d.getCognome() + " di: " + ca.getCliente())) {
-							 c = ca;
+							daChiudere = ca;
 							 cantieriComboBox.removeItemAt(cantieriComboBox.getSelectedIndex());
 						}
 					}
-					rm.chiusuraContratto(ro.chiudiCantiere(c));
+					if(daChiudere == null) System.out.println("NULL");
+					System.out.println(daChiudere);
+					if(daChiudere != null) rm.chiusuraContratto(ro.chiudiCantiere(daChiudere));
+					
 				}
 				else if (aggiungiSquadra.isSelected()){
 					Cantiere c = null;

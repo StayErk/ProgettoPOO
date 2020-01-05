@@ -8,9 +8,6 @@ import utils.SalvaLeggiImpresa;
 public class Startert {
 
 	public static void main(String[] args) {
-		Impresa i = null;
-		SalvaLeggiImpresa loader = new SalvaLeggiImpresa(i);
-		loader.CaricaImpresa("impresa.dat");
 		JFrame frame = new InitFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
