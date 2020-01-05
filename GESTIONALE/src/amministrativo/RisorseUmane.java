@@ -39,7 +39,7 @@ public class RisorseUmane extends RepartoAmministrativo {
 		public void pagaDipendenti(Estraibile<Dipendente> criterio) {
 		ArrayList<Dipendente> daPagare = scegliDipendenti(criterio);
 		for(Dipendente d:daPagare) {
-			if(!d.getStato()) {
+			if(!d.getStatoPagamento()) {
 				d.paga();
 				if(d instanceof Dirigente) {
 					effettuaSpesa(Pagabile.STIPENDIO_DIRIGENTE);
@@ -63,6 +63,30 @@ public class RisorseUmane extends RepartoAmministrativo {
 				}
 			}
 			
+		}
+	}
+		
+	public void pagaDipendenti(Dipendente d) {
+		if (!d.getStatoPagamento()) {
+			d.paga();
+			if (d instanceof Dirigente) {
+				effettuaSpesa(Pagabile.STIPENDIO_DIRIGENTE);
+			} else if (d instanceof Operaio) {
+				Operaio o = (Operaio) d;
+				effettuaSpesa(Pagabile.STIPENDIO_OPERAIO + Pagabile.BONUS_OPERAIO * o.getNumeroCantieri());
+			} else if (d instanceof Impiegato) {
+				Impiegato i = (Impiegato) d;
+				if (i.getNumeroOreSettimanali() >= ORE_PARTTIME && i.getNumeroOreSettimanali() <= ORE_FULLTIME)
+					effettuaSpesa(Pagabile.STIPENDIO_IMPIEGATOFT);
+				else if (i.getNumeroOreSettimanali() <= ORE_PARTTIME) {
+					effettuaSpesa(Pagabile.STIPENDIO_IMPIEGATOPT);
+				} else
+					effettuaSpesa(Pagabile.STIPENDIO_IMPIEGATOFT
+							+ ((ORE_FULLTIME - i.getNumeroOreSettimanali()) * Pagabile.BONUS_IMPIEGATO));
+			} else if (d instanceof Quadro) {
+				Quadro q = (Quadro) d;
+				effettuaSpesa(Pagabile.STIPENDIO_QUADRO * q.getNumeroGiorniConsulenza());
+			}
 		}
 	}
 	
