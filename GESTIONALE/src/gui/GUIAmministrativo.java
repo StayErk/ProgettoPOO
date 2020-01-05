@@ -532,7 +532,7 @@ public class GUIAmministrativo extends JFrame {
 			}
 			
 			ArrayList<MaterialeDaCostruzione> scelti = rm.scegliMateriale(criterioRM);
-			areaMagazzino.setText("Carico in magazzino: " + rm.getMagazzino().getCaricoAttuale() + " su: " +rm.getMagazzino().getCapacitàMax() + "\n");
+			areaMagazzino.setText("Carico in magazzino: " + rm.getMagazzino().getCaricoAttuale() + " su: " +rm.getMagazzino().getCapacitaMax() + "\n");
 			for(MaterialeDaCostruzione m:scelti) {
 				areaMagazzino.append("Prodotto: " + m.getClass().getSimpleName() + " con codice: " + m.getCodiceProdotto() + " valore: " + m.getValoreProdotto() + " peso: " +m.getPeso() + "\n");
 			}

@@ -56,7 +56,7 @@ public class GUIAcquisto extends JFrame {
 		aggiungiAlCarrello = new JButton("Aggiungi al Carrello");
 		compra = new JButton("Compra");
 		
-		infoSulCarico = new JLabel("Carico del magazzino dopo l'aquisto: "+ rm.getMagazzino().getCaricoAttuale()+"/"+rm.getMagazzino().getCapacitàMax());
+		infoSulCarico = new JLabel("Carico del magazzino dopo l'aquisto: "+ rm.getMagazzino().getCaricoAttuale()+"/"+rm.getMagazzino().getCapacitaMax());
 		costoCarrello = 0;
 		caricoFuturo = 0;
 		infoCostoCarrello = new JLabel("€");
@@ -155,7 +155,7 @@ public class GUIAcquisto extends JFrame {
 					System.out.println(m);
 					vediCarrello.append(m.getClass().getSimpleName() + " - peso: " + m.getPeso() + " - valore: " + m.getValoreProdotto()+"\n");
 					caricoFuturo += m.getPeso();
-					infoSulCarico.setText("Carico del magazzino dopo l'aquisto: "+ (rm.getMagazzino().getCaricoAttuale()+caricoFuturo)+"/"+rm.getMagazzino().getCapacitàMax());
+					infoSulCarico.setText("Carico del magazzino dopo l'aquisto: "+ (rm.getMagazzino().getCaricoAttuale()+caricoFuturo)+"/"+rm.getMagazzino().getCapacitaMax());
 					costoCarrello += m.getValoreProdotto();
 					infoCostoCarrello.setText(costoCarrello + "€");
 					carrello.add(m);

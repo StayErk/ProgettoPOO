@@ -58,23 +58,23 @@ public class TesterRisorseMateriali {
 		try {
 			System.out.println("Aggiungo primo prodotto");
 			rm.acquistaDaFornitore(f1, (MaterialeDaCostruzione)f1.getCatalogo().get(0));
-			System.out.println("Capacità attuale: " + rm.getMagazzino().getCaricoAttuale()+ " su " + rm.getMagazzino().getCapacitàMax());
+			System.out.println("Capacità attuale: " + rm.getMagazzino().getCaricoAttuale()+ " su " + rm.getMagazzino().getCapacitaMax());
 			System.out.println("Aggiungo secondo prodotto");
 			rm.acquistaDaFornitore(f1, (MaterialeDaCostruzione)f1.getCatalogo().get(1));
-			System.out.println("Capacità attuale: " + rm.getMagazzino().getCaricoAttuale()+ " su " + rm.getMagazzino().getCapacitàMax());
+			System.out.println("Capacità attuale: " + rm.getMagazzino().getCaricoAttuale()+ " su " + rm.getMagazzino().getCapacitaMax());
 			System.out.println("Aggiungo terzo prodotto");
 			rm.acquistaDaFornitore(f1, (MaterialeDaCostruzione)f1.getCatalogo().get(2));
-			System.out.println("Capacità attuale: " + rm.getMagazzino().getCaricoAttuale()+ " su " + rm.getMagazzino().getCapacitàMax());
+			System.out.println("Capacità attuale: " + rm.getMagazzino().getCaricoAttuale()+ " su " + rm.getMagazzino().getCapacitaMax());
 			System.out.println("Aggiungo quarto prodotto");
 			rm.acquistaDaFornitore(f1, (MaterialeDaCostruzione)f1.getCatalogo().get(3));
-			System.out.println("Capacità attuale: " + rm.getMagazzino().getCaricoAttuale()+ " su " + rm.getMagazzino().getCapacitàMax());
+			System.out.println("Capacità attuale: " + rm.getMagazzino().getCaricoAttuale()+ " su " + rm.getMagazzino().getCapacitaMax());
 			System.out.println("Aggiungo quinto prodotto");
 			rm.acquistaDaFornitore(f1, (MaterialeDaCostruzione)f1.getCatalogo().get(4));
-			System.out.println("Capacità attuale: " + rm.getMagazzino().getCaricoAttuale()+ " su " + rm.getMagazzino().getCapacitàMax());
+			System.out.println("Capacità attuale: " + rm.getMagazzino().getCaricoAttuale()+ " su " + rm.getMagazzino().getCapacitaMax());
 			System.out.println("Cerco di aggiungere un prodotto di peso: " + f1.getCatalogo().get(6).getPeso());
 			System.out.println("Aggiungo sesto prodotto");
 			rm.acquistaDaFornitore(f1, (MaterialeDaCostruzione)f1.getCatalogo().get(6));
-			System.out.println("Capacità attuale: " + rm.getMagazzino().getCaricoAttuale()+ " su " + rm.getMagazzino().getCapacitàMax());
+			System.out.println("Capacità attuale: " + rm.getMagazzino().getCaricoAttuale()+ " su " + rm.getMagazzino().getCapacitaMax());
 		}
 		catch (CapacitaSuperataException e) {
 			System.out.println("Superato caricoMax Magazzino");

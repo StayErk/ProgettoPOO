@@ -21,7 +21,7 @@ public class Magazzino<T extends MaterialeDaCostruzione> implements Serializable
 		materiali = new ArrayList<T>();
 	}
 	
-	public int getCapacitàMax() {
+	public int getCapacitaMax() {
 		return capacitaMax;
 	}
 	

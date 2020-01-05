@@ -18,13 +18,13 @@ public class TesterMagazzino {
 		
 		
 		try {
-			System.out.println("capacità attuale: " + mag1.getCaricoAttuale() + " capacità max: " + mag1.getCapacitàMax());
+			System.out.println("capacità attuale: " + mag1.getCaricoAttuale() + " capacità max: " + mag1.getCapacitaMax());
 			System.out.println("Aggiungo il prodotto (m1) al magazzino");
 			mag1.aggiungiMateriale(m1);
-			System.out.println("capacità attuale: " + mag1.getCaricoAttuale() + " capacità max: " + mag1.getCapacitàMax());
+			System.out.println("capacità attuale: " + mag1.getCaricoAttuale() + " capacità max: " + mag1.getCapacitaMax());
 			System.out.println("Aggiungo il prodotto (m2) al magazzino");
 			mag1.aggiungiMateriale(m2);
-			System.out.println("capacità attuale: " + mag1.getCaricoAttuale() + " capacità max: " + mag1.getCapacitàMax());
+			System.out.println("capacità attuale: " + mag1.getCaricoAttuale() + " capacità max: " + mag1.getCapacitaMax());
 			System.out.println("Al prossimo inserimento mi aspetto CapacitaSuperataException");
 			System.out.println("Provo ad inserire (m3) che pesa: " +m3.getPeso());
 			mag1.aggiungiMateriale(m3);
@@ -34,7 +34,7 @@ public class TesterMagazzino {
 			System.out.println("Rimuovo (m1)");
 			MaterialeDaCostruzione m  = mag1.rimuoviMateriale("tb1");
 			System.out.println("Peso del materiale rimosso: "+m.getPeso());
-			System.out.println("capacità attuale: " + mag1.getCaricoAttuale() + " capacità max: " + mag1.getCapacitàMax()+"\n");
+			System.out.println("capacità attuale: " + mag1.getCaricoAttuale() + " capacità max: " + mag1.getCapacitaMax()+"\n");
 			
 			System.out.println("Provo a rimuovere un Materiale non presente. Mi aspetto ProdottoNonPresenteException");
 			try {
