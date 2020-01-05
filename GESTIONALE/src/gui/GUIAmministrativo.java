@@ -42,6 +42,7 @@ public class GUIAmministrativo extends JFrame {
 	private JRadioButton rangePeso;
 	private JRadioButton perNome;
 	private JRadioButton nonPerNome;
+	private JRadioButton tutti;
 
 	
 	private JButton report;
@@ -93,6 +94,7 @@ public class GUIAmministrativo extends JFrame {
 		codiceArticolo = new JRadioButton("Codice Articolo");
 		perNome = new JRadioButton("ricerca per nome");
 		nonPerNome = new JRadioButton("ricerca generica");
+		tutti = new JRadioButton("tutti");
 		
 		report = new JButton("Genera Report");
 		refreshButton = new JButton("Ricarica");
@@ -176,6 +178,16 @@ public class GUIAmministrativo extends JFrame {
 	
 	private JPanel createButtonAssumi() {
 		JPanel p = new JPanel();
+		class Click implements ActionListener{
+
+			public void actionPerformed(ActionEvent arg0) {
+				JFrame assumi = new GUIAssunzione(ru);
+				assumi.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+				assumi.setVisible(true);
+			}
+			
+		}
+		assumi.addActionListener(new Click());
 		p.add(assumi);
 		return p;
 	}
@@ -183,6 +195,15 @@ public class GUIAmministrativo extends JFrame {
 	private JPanel createButtonLicenzia() {
 		JPanel p = new JPanel();
 		p.add(licenzia);
+		class Click implements ActionListener{
+
+			public void actionPerformed(ActionEvent arg0) {
+				for(Dipendente d : selezionatiDipendenti) {
+					ru.licenzia(d.getMatricolaDipendente());
+				}
+			}
+		}
+		licenzia.addActionListener(new Click());
 		return p;
 	}
 	
@@ -369,12 +390,33 @@ public class GUIAmministrativo extends JFrame {
 	
 	private JPanel createAcquistaButton() {
 		JPanel p = new JPanel();
+		class Click implements ActionListener {
+
+			public void actionPerformed(ActionEvent arg0) {
+				JFrame acquista = new GUIAcquisto(rm);
+				acquista.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+				acquista.setVisible(true);
+			}
+			
+		}
+		acquistaMateriali.addActionListener(new Click());
 		p.add(acquistaMateriali);
 		return p;
 	}
 	
 	private JPanel createGestisciFornitoreButton() {
 		JPanel p = new JPanel();
+		class Click implements ActionListener{
+
+			
+			public void actionPerformed(ActionEvent arg0) {
+				JFrame aggiuntaFornitore = new GUIAggiuntaFornitore(rm);
+				aggiuntaFornitore.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+				aggiuntaFornitore.setVisible(true);
+			}
+			
+		}
+		aggiungiFornitori.addActionListener(new Click());
 		p.add(aggiungiFornitori);
 		return p;
 	}
@@ -390,15 +432,18 @@ public class GUIAmministrativo extends JFrame {
 	
 	private JPanel typeSelection() {
 		JPanel p = new JPanel();
-		p.setLayout(new GridLayout(3, 1));
+		p.setLayout(new GridLayout(4, 1));
 		p.setBorder(new TitledBorder(new EtchedBorder(), "Criterio di ricerca"));
 		ButtonGroup group = new ButtonGroup();
 		group.add(codiceArticolo);
 		group.add(rangePeso);
 		group.add(rangePrezzo);
+		group.add(tutti);
 		codiceArticolo.addActionListener(new SceltaTipoMateriale());
 		rangePeso.addActionListener(new SceltaTipoMateriale());
 		rangePrezzo.addActionListener(new SceltaTipoMateriale());
+		tutti.addActionListener(new SceltaTipoMateriale());
+		p.add(tutti);
 		p.add(codiceArticolo);
 		p.add(rangePeso);
 		p.add(rangePrezzo);
@@ -444,8 +489,13 @@ public class GUIAmministrativo extends JFrame {
 				input2.setEditable(false);
 				input1Label.setText("Inserisci codice articolo o parte di esso: ");
 			}
+			else if (tutti.isSelected()) {
+				input1.setEditable(false);
+				input2.setEditable(false);
+			}
 			else {
 				input2.setEditable(true);
+				input1.setEditable(true);
 				input1Label.setText("Range iniziale: ");
 			}
 			
@@ -459,10 +509,26 @@ public class GUIAmministrativo extends JFrame {
 				criterioRM = (p)->p.getCodiceProdotto().contains(input1.getText());
 			}
 			else if(rangePeso.isSelected()) {
-				criterioRM = (p)->p.getPeso()>=Integer.parseInt(input1.getText()) && p.getPeso()<=Integer.parseInt(input2.getText());
+				
+				try {
+					criterioRM = (p)->p.getPeso()>=Integer.parseInt(input1.getText()) && p.getPeso()<=Integer.parseInt(input2.getText());
+				}
+				catch (NumberFormatException e) {
+					input1.setText("0");
+					input2.setText("0");
+				}
+			}
+			else if(tutti.isSelected()) {
+				criterioRM = (p)->true;
 			}
 			else {
-				criterioRM = (p)->p.getValoreProdotto()>=Integer.parseInt(input1.getText()) && p.getValoreProdotto()<=Integer.parseInt(input2.getText());
+				try {
+					criterioRM = (p)->p.getValoreProdotto()>=Integer.parseInt(input1.getText()) && p.getValoreProdotto()<=Integer.parseInt(input2.getText());
+				}
+				catch (NumberFormatException e) {
+					input1.setText("0");
+					input2.setText("0");
+				}
 			}
 			
 			ArrayList<MaterialeDaCostruzione> scelti = rm.scegliMateriale(criterioRM);

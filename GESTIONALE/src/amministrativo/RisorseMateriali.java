@@ -68,11 +68,23 @@ public class RisorseMateriali extends RepartoAmministrativo {
 	 */
 	public void acquistaDaFornitore(Fornitore doveAcquistare, MaterialeDaCostruzione daAcquistare) throws CapacitaSuperataException{
 		if(fornitori.contains(doveAcquistare)) {
-			Fornitore f = fornitori.get(fornitori.indexOf(doveAcquistare));
+			Fornitore<MaterialeDaCostruzione> f = fornitori.get(fornitori.indexOf(doveAcquistare));
 			if(f.getCatalogo().contains(daAcquistare)) {
 				ArrayList<MaterialeDaCostruzione> catalogo = f.getCatalogo();
 				effettuaSpesa(daAcquistare.getValoreProdotto());
 				magazzino.aggiungiMateriale(daAcquistare);			}
+		}
+	}
+	
+	public void acquistaMateriali(MaterialeDaCostruzione daAcquistare) throws CapacitaSuperataException {
+		effettuaSpesa(daAcquistare.getValoreProdotto());
+		magazzino.aggiungiMateriale(daAcquistare);
+	}
+
+	public void acquistaMateriali(ArrayList<MaterialeDaCostruzione> daAcquistare) throws CapacitaSuperataException{
+		for(MaterialeDaCostruzione m:daAcquistare) {
+				effettuaSpesa(m.getValoreProdotto());
+				magazzino.aggiungiMateriale(m);
 		}
 	}
 	

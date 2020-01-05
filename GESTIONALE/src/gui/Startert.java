@@ -11,7 +11,7 @@ public class Startert {
 		Impresa i = null;
 		SalvaLeggiImpresa loader = new SalvaLeggiImpresa(i);
 		loader.CaricaImpresa("impresa.dat");
-		JFrame frame = new GUIAmministrativo(loader.getImpresa());
+		JFrame frame = new InitFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 

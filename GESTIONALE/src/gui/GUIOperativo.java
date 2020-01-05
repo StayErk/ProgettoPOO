@@ -53,7 +53,8 @@ public class GUIOperativo extends JFrame{
 		refresh = new JButton("Ricarica");
 		cantieriComboBox = new JComboBox<String>();
 		for(Cantiere ca:ro.getCantieriAperti()) {
-			cantieriComboBox.addItem(ca.getCapocantiere() + "");
+			Dipendente d = (Dipendente) ca.getCapocantiere();
+			cantieriComboBox.addItem("Dirigente: " + d.getCognome() + " di: " + ca.getCliente());
 		}
 		esegui = new JButton("Esegui");
 	
@@ -75,9 +76,16 @@ public class GUIOperativo extends JFrame{
 	public JPanel editPanel() {
 		JPanel p = new JPanel();
 		p.setLayout(new GridLayout(2, 1));
-		p.add(cantieriComboBox);
+		p.add(sceltaCantiereSection());
 		p.add(buttonSection());
 		p.setBorder(new TitledBorder(new EtchedBorder(), "tab gestione"));
+		return p;
+	}
+	
+	private JPanel sceltaCantiereSection() {
+		JPanel p = new JPanel();
+		p.add(new JLabel("Scegli Cantiere: "));
+		p.add(cantieriComboBox);
 		return p;
 	}
 	
@@ -111,7 +119,8 @@ public class GUIOperativo extends JFrame{
 				{
 					Cantiere c = null;
 					for(Cantiere ca :ro.getCantieriAperti()) {
-						if(cantieriComboBox.getSelectedItem().equals(ca.getCapocantiere() + "")) {
+						Dipendente d = (Dipendente) ca.getCapocantiere();
+						if(cantieriComboBox.getSelectedItem().equals("Dirigente: " + d.getCognome() + " di: " + ca.getCliente())) {
 							 c = ca;
 							 cantieriComboBox.removeItemAt(cantieriComboBox.getSelectedIndex());
 						}
@@ -121,7 +130,8 @@ public class GUIOperativo extends JFrame{
 				else if (aggiungiSquadra.isSelected()){
 					Cantiere c = null;
 					for(Cantiere ca :ro.getCantieriAperti()) {
-						if(cantieriComboBox.getSelectedItem().equals(ca.getCapocantiere() + "")) {
+						Dipendente d = (Dipendente) ca.getCapocantiere();
+						if(cantieriComboBox.getSelectedItem().equals("Dirigente: " + d.getCognome() + " di: " + ca.getCliente())) {
 							 c = ca;
 							 JFrame squadraChooser = new GUISquadra(ro, ru, ca);
 							 squadraChooser.setVisible(true);
@@ -132,11 +142,12 @@ public class GUIOperativo extends JFrame{
 				else {
 					Cantiere c = null;
 					for(Cantiere ca :ro.getCantieriAperti()) {
-						if(cantieriComboBox.getSelectedItem().equals(ca.getCapocantiere() + "")) {
+						Dipendente d = (Dipendente) ca.getCapocantiere();
+						if(cantieriComboBox.getSelectedItem().equals("Dirigente: " + d.getCognome() + " di: " + ca.getCliente())) {
 							 c = ca;
 							 JFrame details = new DettagliCantiere(ca);
 							 details.setVisible(true);
-							 details.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+							 details.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 						}
 					}
 				}
@@ -191,7 +202,8 @@ public class GUIOperativo extends JFrame{
 			public void actionPerformed(ActionEvent arg0) {
 				cantieriComboBox.removeAllItems();
 				for(Cantiere ca:ro.getCantieriAperti()) {
-					cantieriComboBox.addItem(ca.getCapocantiere() + "");
+					Dipendente d = (Dipendente) ca.getCapocantiere();
+					cantieriComboBox.addItem("Dirigente: " + d.getCognome() + " di: " + ca.getCliente());
 				}
 				
 			}
