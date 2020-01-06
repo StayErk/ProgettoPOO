@@ -8,6 +8,11 @@ public class Quadro extends Dipendente implements Responsabile{
 		this.numeroGiorniConsulenza = numeroGiorniConsulenza;
 	}
 	
+	public double paga() {
+		super.setStatoPagamento();
+		return Pagabile.STIPENDIO_QUADRO * numeroGiorniConsulenza;
+	}
+	
 	public int getNumeroGiorniConsulenza() {
 		return numeroGiorniConsulenza;
 	}

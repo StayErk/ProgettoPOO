@@ -63,7 +63,7 @@ public class GUIAcquisto extends JFrame {
 		
 		add(mainPanel());
 		
-		setSize(650, 430);
+		setSize(950, 430);
 	}
 	
 	private JPanel mainPanel() {
@@ -94,7 +94,7 @@ public class GUIAcquisto extends JFrame {
 						fornitoreSelezionato = f;
 						System.out.println(f);
 						for(MaterialeDaCostruzione m: f.getCatalogo()) {
-							catalogo.addItem(m.getClass().getSimpleName() + " - peso: " + m.getPeso() + " - valore: " + m.getValoreProdotto());
+							catalogo.addItem(m.getClass().getSimpleName() + " codice: " +m.getCodiceProdotto() + " -peso: " + m.getPeso() + ", " + m.getValoreProdotto() + "€");
 						}
 					}
 				}
@@ -151,9 +151,9 @@ public class GUIAcquisto extends JFrame {
 
 		public void actionPerformed(ActionEvent arg0) {
 			for(MaterialeDaCostruzione m: fornitoreSelezionato.getCatalogo()) {
-				if(catalogo.getSelectedItem().equals(m.getClass().getSimpleName() + " - peso: " + m.getPeso() + " - valore: " + m.getValoreProdotto())) {
+				if(catalogo.getSelectedItem().equals(m.getClass().getSimpleName() + " codice: " +m.getCodiceProdotto() + " -peso: " + m.getPeso() + ", "  + m.getValoreProdotto() + "€")) {
 					System.out.println(m);
-					vediCarrello.append(m.getClass().getSimpleName() + " - peso: " + m.getPeso() + " - valore: " + m.getValoreProdotto()+"\n");
+					vediCarrello.append(m.getClass().getSimpleName() + " codice: " +m.getCodiceProdotto() + " -peso: " + m.getPeso()  + ", "+ m.getValoreProdotto() + "€"+"\n");
 					caricoFuturo += m.getPeso();
 					infoSulCarico.setText("Carico del magazzino dopo l'aquisto: "+ (rm.getMagazzino().getCaricoAttuale()+caricoFuturo)+"/"+rm.getMagazzino().getCapacitaMax());
 					costoCarrello += m.getValoreProdotto();
@@ -171,7 +171,9 @@ public class GUIAcquisto extends JFrame {
 
 		public void actionPerformed(ActionEvent arg0) {
 			try {
+				System.out.println("ACQUISTO BENI Capitale Azienda: " + rm.getCapitale());
 				rm.acquistaMateriali(carrello);
+				System.out.println("ACQUISTO BENI Capitale Azienda: " + rm.getCapitale());
 				dispose();
 			}
 			catch (CapacitaSuperataException e) {

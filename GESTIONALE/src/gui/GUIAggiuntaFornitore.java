@@ -206,15 +206,21 @@ public class GUIAggiuntaFornitore extends JFrame {
 	private class AggiuntaProdotto implements ActionListener {
 
 		public void actionPerformed(ActionEvent arg0) {
+			boolean flag = true;
 			if(tipoProdotto.getSelectedItem().equals("Tubi Innocenti")) {
 				try {
 					TubiInnocenti t = new TubiInnocenti(codiceProdotto.getText(), Double.parseDouble(valoreProdotto.getText()), Integer.parseInt(pesoProdotto.getText()), Integer.parseInt(opzionale.getText()));
-					vediCatalogo.append(t.getClass().getSimpleName() + " -cod: " + t.getCodiceProdotto() + " -peso: " + t.getPeso() + " -valore: " + t.getValoreProdotto() + "\n");
-					opzionale.setText("");
-					codiceProdotto.setText("");
-					valoreProdotto.setText("");
-					pesoProdotto.setText("");
-					catalogo.add(t);
+					for(MaterialeDaCostruzione m:catalogo) {
+						if (m.getCodiceProdotto().equals(t.getCodiceProdotto())) flag = false;
+					}
+					if (flag) {
+						vediCatalogo.append(t.getClass().getSimpleName() + " -cod: " + t.getCodiceProdotto() + " -peso: " + t.getPeso() + " -valore: " + t.getValoreProdotto() + "\n");
+						opzionale.setText("");
+						codiceProdotto.setText("");
+						valoreProdotto.setText("");
+						pesoProdotto.setText("");
+						catalogo.add(t);
+					}
 				}
 				catch (NumberFormatException e) {
 					valoreProdotto.setText("0");
@@ -226,12 +232,17 @@ public class GUIAggiuntaFornitore extends JFrame {
 				
 				try {
 					Viti t = new Viti(codiceProdotto.getText(), Double.parseDouble(valoreProdotto.getText()), Integer.parseInt(pesoProdotto.getText()), opzionale.getText());
-					vediCatalogo.append(t.getClass().getSimpleName() + " -cod: " + t.getCodiceProdotto() + " -peso: " + t.getPeso() + " -valore: " + t.getValoreProdotto() + "\n");
-					opzionale.setText("");
-					codiceProdotto.setText("");
-					valoreProdotto.setText("");
-					pesoProdotto.setText("");
-					catalogo.add(t);
+					for(MaterialeDaCostruzione m:catalogo) {
+						if (m.getCodiceProdotto().equals(t.getCodiceProdotto())) flag = false;
+					}
+					if (flag) {
+						vediCatalogo.append(t.getClass().getSimpleName() + " -cod: " + t.getCodiceProdotto() + " -peso: " + t.getPeso() + " -valore: " + t.getValoreProdotto() + "\n");
+						opzionale.setText("");
+						codiceProdotto.setText("");
+						valoreProdotto.setText("");
+						pesoProdotto.setText("");
+						catalogo.add(t);
+					}
 				}
 				catch (NumberFormatException e) {
 					valoreProdotto.setText("0");
@@ -241,12 +252,17 @@ public class GUIAggiuntaFornitore extends JFrame {
 			else if(tipoProdotto.getSelectedItem().equals("Trapano")) {
 				try {
 					Trapano t = new Trapano(codiceProdotto.getText(), Double.parseDouble(valoreProdotto.getText()), Integer.parseInt(pesoProdotto.getText()), Integer.parseInt(opzionale.getText()));
-					vediCatalogo.append(t.getClass().getSimpleName() + " -cod: " + t.getCodiceProdotto() + " -peso: " + t.getPeso() + " -valore: " + t.getValoreProdotto() + "\n");
-					opzionale.setText("");
-					codiceProdotto.setText("");
-					valoreProdotto.setText("");
-					pesoProdotto.setText("");
-					catalogo.add(t);
+					for(MaterialeDaCostruzione m:catalogo) {
+						if (m.getCodiceProdotto().equals(t.getCodiceProdotto())) flag = false;
+					}
+					if (flag) {
+						vediCatalogo.append(t.getClass().getSimpleName() + " -cod: " + t.getCodiceProdotto() + " -peso: " + t.getPeso() + " -valore: " + t.getValoreProdotto() + "\n");
+						opzionale.setText("");
+						codiceProdotto.setText("");
+						valoreProdotto.setText("");
+						pesoProdotto.setText("");
+						catalogo.add(t);
+					}
 				}
 				catch (NumberFormatException e) {
 					valoreProdotto.setText("0");
@@ -257,12 +273,17 @@ public class GUIAggiuntaFornitore extends JFrame {
 			else {
 				try {
 					Betoniera t = new Betoniera(codiceProdotto.getText(), Double.parseDouble(valoreProdotto.getText()), Integer.parseInt(pesoProdotto.getText()), Integer.parseInt(opzionale.getText()));
-					vediCatalogo.append(t.getClass().getSimpleName() + " -cod: " + t.getCodiceProdotto() + " -peso: " + t.getPeso() + " -valore: " + t.getValoreProdotto() + "\n");
-					opzionale.setText("");
-					codiceProdotto.setText("");
-					valoreProdotto.setText("");
-					pesoProdotto.setText("");
-					catalogo.add(t);
+					for(MaterialeDaCostruzione m:catalogo) {
+						if (m.getCodiceProdotto().equals(t.getCodiceProdotto())) flag = false;
+					}
+					if (flag) {
+						vediCatalogo.append(t.getClass().getSimpleName() + " -cod: " + t.getCodiceProdotto() + " -peso: " + t.getPeso() + " -valore: " + t.getValoreProdotto() + "\n");
+						opzionale.setText("");
+						codiceProdotto.setText("");
+						valoreProdotto.setText("");
+						pesoProdotto.setText("");
+						catalogo.add(t);
+					}
 				}
 				catch (NumberFormatException e) {
 					valoreProdotto.setText("0");

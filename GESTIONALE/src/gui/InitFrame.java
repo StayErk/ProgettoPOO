@@ -26,6 +26,7 @@ import materiale.Magazzino;
 import materiale.MaterialeDaCostruzione;
 import operativo.Cantiere;
 import operativo.RepartoOperativo;
+import personale.Dipendente;
 import utils.Impresa;
 import utils.SalvaLeggiImpresa;
 
@@ -48,10 +49,7 @@ public class InitFrame extends JFrame {
 	
 	private JTextField capacitaMagazzino;
 	private JTextField capitaleIniziale;
-	
-	
-	private File corrente;
-	
+		
 	public InitFrame() {
 		amministrativo = new JButton("Reparto Amministrativo");
 		operativo = new JButton("Reparto Operativo");
@@ -201,9 +199,11 @@ public class InitFrame extends JFrame {
 		
 		public void actionPerformed(ActionEvent arg0) {
 				if(salva.isSelected()) {
+					i.getRisorseUmane().equilibraCapitale();
+					i.getRisorseMateriali().equilibraCapitale();
 					SalvaLeggiImpresa salva = new SalvaLeggiImpresa(i);
 					salva.SalvaImpresa(input.getText());
-					capitaleAzienda.setText("Capitale dell'azienda: " + i.getRisorseUmane().getCapitale());
+					System.out.println(salva.getImpresa());
 					double valoreCantieriAperti = 0;
 					for(Cantiere c: i.getRepartoOperativo().getCantieriAperti()) {
 						valoreCantieriAperti += c.getValoreCantiere();
@@ -214,8 +214,11 @@ public class InitFrame extends JFrame {
 					SalvaLeggiImpresa salva = new SalvaLeggiImpresa(i);
 					salva.CaricaImpresa(input.getText());
 					i = salva.getImpresa();
+					i.getRisorseUmane().equilibraCapitaleInverso();
+					i.getRisorseMateriali().equilibraCapitaleInverso();
+					System.out.println(i.getRisorseMateriali().getCapitale());
 					System.out.println(i.getRisorseUmane().getCapitale());
-					capitaleAzienda.setText("Capitale dell'azienda: " + i.getRisorseUmane().getCapitale());
+					capitaleAzienda.setText("Capitale azienda: " + i.getRisorseUmane().getCapitale()+"");
 					double valoreCantieriAperti = 0;
 					for(Cantiere c: i.getRepartoOperativo().getCantieriAperti()) {
 						valoreCantieriAperti += c.getValoreCantiere();

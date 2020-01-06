@@ -27,7 +27,9 @@ public abstract class Dipendente implements Pagabile, Cloneable{
 		return pagato;
 	}
 	
-	public void paga() {
+	public abstract double paga();
+	
+	public void setStatoPagamento() {
 		pagato = true;
 	}
 	

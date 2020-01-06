@@ -25,6 +25,7 @@ import operativo.RepartoOperativo;
 import personale.Dipendente;
 import personale.Dirigente;
 import personale.Operaio;
+import personale.Pagabile;
 import personale.Quadro;
 import personale.Responsabile;
 import utils.Estraibile;
@@ -39,7 +40,7 @@ public class GUICreazioneCantiere extends JFrame {
 	private double valoreCantiere = 0;
 	private String nomeCommittente;
 
-	private RisorseUmane ru;
+	private RisorseUmane<Dipendente> ru;
 	private RisorseMateriali rm;
 	private RepartoOperativo ro;
 	private JScrollPane pane;
@@ -52,7 +53,7 @@ public class GUICreazioneCantiere extends JFrame {
 	private JLabel valoreTotaleCantiere;
 	
 	
-	public GUICreazioneCantiere(double valoreCantiere, String nomeCommittente,  RisorseUmane ru, RisorseMateriali rm, RepartoOperativo ro) {
+	public GUICreazioneCantiere(double valoreCantiere, String nomeCommittente,  RisorseUmane<Dipendente> ru, RisorseMateriali rm, RepartoOperativo ro) {
 		this.valoreCantiere += valoreCantiere;
 		this.nomeCommittente = nomeCommittente;
 		this.rm = rm;
@@ -108,6 +109,18 @@ public class GUICreazioneCantiere extends JFrame {
 		JPanel p = new JPanel();
 		p.setLayout(new GridLayout(1, 2));
 		p.add(new JLabel("Scegli Responsabile: "));
+		class Click implements ActionListener {
+			public void actionPerformed(ActionEvent arg0) {
+				for (Dipendente d: ru.scegliDipendenti(criterioResponsabile)) {
+					if (valoreCantiere > 500000) {
+						if(d instanceof Dirigente) responsabiliComboBox.addItem(d.getNome() + " " + d.getCognome());
+					}
+					responsabiliComboBox.addItem(d.getNome() + " " + d.getCognome());
+				}
+			}
+			
+		}
+		responsabiliComboBox.addActionListener(new Click());
 		p.add(responsabiliComboBox);
 		return p;
 	}

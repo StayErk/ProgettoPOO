@@ -12,6 +12,11 @@ public class Dirigente extends Dipendente implements Responsabile{
 		return titoloStudio;
 	}
 	
+	public double paga() {
+		super.setStatoPagamento();
+		return Pagabile.STIPENDIO_DIRIGENTE;
+	}
+	
 	public String toString() {
 		return super.toString() + "[titolo di Studio="+titoloStudio+"]";
 	}

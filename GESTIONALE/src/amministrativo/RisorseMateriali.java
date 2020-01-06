@@ -114,6 +114,6 @@ public class RisorseMateriali extends RepartoAmministrativo {
 	}
 	
 	public String toString() {
-		return getClass().getName() + "[Magazzino="+magazzino+", fornitori="+fornitori+"]";
+		return super.toString() + "[Magazzino="+magazzino+", fornitori="+fornitori+"]";
 	}
 }

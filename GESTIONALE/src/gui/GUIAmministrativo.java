@@ -23,6 +23,7 @@ import amministrativo.RisorseUmane;
 import materiale.MaterialeDaCostruzione;
 import operativo.RepartoOperativo;
 import personale.Dipendente;
+import personale.Pagabile;
 import utils.Estraibile;
 import utils.Impresa;
 
@@ -65,7 +66,7 @@ public class GUIAmministrativo extends JFrame {
 	private JLabel input1Label;
 	
 	private Impresa i;
-	private RisorseUmane ru;
+	private RisorseUmane<Dipendente> ru;
 	private RisorseMateriali rm;
 	private RepartoOperativo ro;
 	
@@ -213,8 +214,10 @@ public class GUIAmministrativo extends JFrame {
 
 			public void actionPerformed(ActionEvent arg0) {
 				for(Dipendente d : selezionatiDipendenti) {
+					System.out.println("PAGA STIPENDIO capitale: " + ru.getCapitale());
 					double soldiPrima = ru.getCapitale();
 					ru.pagaDipendenti(d);
+					System.out.println("PAGA STIPENDIO capitale: " + ru.getCapitale());
 					areaPersonale.append("Pagati al dipendente: "+ d.getCognome() + " " + d.getNome() + ": " + (soldiPrima - ru.getCapitale()) + "\n");
 				}
 				
@@ -711,6 +714,9 @@ public class GUIAmministrativo extends JFrame {
 					}
 					else if (dirigenti.isSelected() && quadri.isSelected() && impiegati.isSelected() && !operai.isSelected()) {
 						criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Quadro") || p.getClass().getSimpleName().equals("Impiegato")) && !p.getStato() && !p.getStatoPagamento();
+					}
+					else if (dirigenti.isSelected() && quadri.isSelected() && !impiegati.isSelected() && operai.isSelected()) {
+						criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Quadro") || p.getClass().getSimpleName().equals("Operaio")) && !p.getStato() && !p.getStatoPagamento();
 					}
 					else if (dirigenti.isSelected() && !quadri.isSelected() && impiegati.isSelected() && operai.isSelected()) {
 						criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Impiegato") || p.getClass().getSimpleName().equals("Operaio")) && !p.getStato() && !p.getStatoPagamento();

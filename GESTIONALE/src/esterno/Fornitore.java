@@ -39,6 +39,9 @@ public class Fornitore<T extends MaterialeDaCostruzione> implements Serializable
 	 */
 	public void aggiungiProdotto(T daAggiungere) {
 		if(catalogo.contains(daAggiungere)) return;
+		for(T m: catalogo) {
+			if(daAggiungere.getCodiceProdotto().equals(m.getCodiceProdotto())) return ;
+		}
 		catalogo.add(daAggiungere);
 	}
 	

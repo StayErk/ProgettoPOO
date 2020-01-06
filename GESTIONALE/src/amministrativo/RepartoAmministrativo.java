@@ -14,8 +14,8 @@ public abstract class RepartoAmministrativo implements Serializable{
 	private double capitaleEffettivo;
 	
 	public RepartoAmministrativo(double capitaleIniziale) {
-		capitale = capitaleIniziale;
-		capitaleEffettivo = capitale;
+		capitaleEffettivo = capitaleIniziale;
+		capitale = capitaleEffettivo;
 	}
 	
 	/**
@@ -27,7 +27,7 @@ public abstract class RepartoAmministrativo implements Serializable{
 	public void aggiungiEntrate(double guadagno) {
 		if(guadagno < 0) throw new IllegalArgumentException();
 		capitale += guadagno;
-		capitaleEffettivo = capitale;
+		equilibraCapitale();
 	}
 	
 	/**
@@ -39,6 +39,10 @@ public abstract class RepartoAmministrativo implements Serializable{
 	public void effettuaSpesa(double spesa) {
 		if(spesa < 0) throw new IllegalArgumentException();
 		capitale -= spesa;
+		equilibraCapitale();
+	}
+	
+	public void equilibraCapitale() {
 		capitaleEffettivo = capitale;
 	}
 	
@@ -47,8 +51,16 @@ public abstract class RepartoAmministrativo implements Serializable{
 	 * @return il capitale attuale dell'impresa
 	 */
 	public double getCapitale() {
-		return capitaleEffettivo;
-		
+		equilibraCapitale();
+		return capitale;
+	}
+	
+	public void equilibraCapitaleInverso() {
+		capitale = capitaleEffettivo;
+	}
+	
+	public String toString() {
+		return getClass().getName()+"[capitaleEffettivo="+capitaleEffettivo+", capitale=" + capitale+"]";
 	}
 	
 }

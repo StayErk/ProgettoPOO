@@ -24,7 +24,7 @@ import utils.Estraibile;
 
 public class GUISquadra extends JFrame {
 	private RepartoOperativo ro;
-	private RisorseUmane ru;
+	private RisorseUmane<Dipendente> ru;
 	private Cantiere daModificare;
 	private ArrayList<Dipendente> operai;
 	private JTextArea dipendetiSelezionati;
@@ -36,7 +36,7 @@ public class GUISquadra extends JFrame {
 	private Estraibile<Dipendente> criterioOperai;
 	private Estraibile<Dipendente> criterioQuadro;
 	
-	public GUISquadra(RepartoOperativo ro, RisorseUmane ru, Cantiere daModificare) {
+	public GUISquadra(RepartoOperativo ro, RisorseUmane<Dipendente> ru, Cantiere daModificare) {
 		this.daModificare = daModificare;
 		this.ro = ro;
 		this.ru = ru;

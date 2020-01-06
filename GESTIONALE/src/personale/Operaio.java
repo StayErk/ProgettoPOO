@@ -15,6 +15,11 @@ public class Operaio extends Dipendente {
 		}
 	}
 	
+	public double paga() {
+		super.setStatoPagamento();
+		return Pagabile.STIPENDIO_OPERAIO + Pagabile.BONUS_OPERAIO * numeroCantieri;
+	}
+	
 	public int getNumeroCantieri() {
 		return numeroCantieri;
 	}

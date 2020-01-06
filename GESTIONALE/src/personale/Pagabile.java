@@ -11,7 +11,12 @@ public interface Pagabile extends Serializable{
 	final static double BONUS_OPERAIO = 7.00;
 	final static double BONUS_IMPIEGATO = 20.00;
 	
-	void paga();
+	static final int ORE_FULLTIME = 40;
+	static final int ORE_PARTTIME = 24;
+	
+	double paga();
+	void setStatoPagamento();
 	void resetStatoPagamento();
 	boolean getStatoPagamento(); 
+	boolean getStato();
 }

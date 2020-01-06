@@ -21,7 +21,7 @@ public class TesterRisorseUmane {
 		System.out.println(di1+"\n"+im1+"\n");
 		
 		System.out.println("Instanzio un reparto risorse umane (ru)");
-		RisorseUmane ru = new RisorseUmane(50000000);
+		RisorseUmane<Dipendente> ru = new RisorseUmane<Dipendente>(50000000);
 		System.out.println(ru+"\n");
 		
 		System.out.println("Lista degli impiegati prima dell'assunzione:");

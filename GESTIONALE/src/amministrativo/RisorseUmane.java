@@ -11,22 +11,21 @@ import personale.Quadro;
 import utils.Estraibile;
 import utils.Estrattore;
 
-public class RisorseUmane extends RepartoAmministrativo {
-	private ArrayList<Dipendente> personale;
+public class RisorseUmane<T extends Pagabile> extends RepartoAmministrativo {
+	private ArrayList<T> personale;
 	
-	private static final int ORE_FULLTIME = 40;
-	private static final int ORE_PARTTIME = 24;
+
 	
 	public RisorseUmane(double capitale) {
 		super(capitale);
-		personale = new ArrayList<Dipendente>();
+		personale = new ArrayList<T>();
 	}
 	
 	/**
 	 * restituisce la lista del personale non impegnato in attività di cantiere
 	 * @return personale impegnato a lavoro in un cantiere
 	 */
-	public ArrayList<Dipendente> getPersonale(){
+	public ArrayList<T> getPersonale(){
 		return personale;
 	}
 	
@@ -36,57 +35,19 @@ public class RisorseUmane extends RepartoAmministrativo {
 	 * effettua il metodo di pagamento corretto
 	 * @param criterio criterio di scelta per selezionare i dipendenti da pagare
 	 */
-		public void pagaDipendenti(Estraibile<Dipendente> criterio) {
-		ArrayList<Dipendente> daPagare = scegliDipendenti(criterio);
-		for(Dipendente d:daPagare) {
+		public void pagaDipendenti(Estraibile<T> criterio) {
+		ArrayList<T> daPagare = scegliDipendenti(criterio);
+		for(Pagabile d:daPagare) {
 			if(!d.getStatoPagamento()) {
-				d.paga();
-				if(d instanceof Dirigente) {
-					effettuaSpesa(Pagabile.STIPENDIO_DIRIGENTE);
-				}
-				else if(d instanceof Operaio) {
-					Operaio o = (Operaio) d;
-					effettuaSpesa(Pagabile.STIPENDIO_OPERAIO + Pagabile.BONUS_OPERAIO * o.getNumeroCantieri());
-				}
-				else if(d instanceof Impiegato) {
-					Impiegato i = (Impiegato) d;
-					if(i.getNumeroOreSettimanali() >= ORE_PARTTIME  && i.getNumeroOreSettimanali() <= ORE_FULLTIME)
-						effettuaSpesa(Pagabile.STIPENDIO_IMPIEGATOFT);
-					else if(i.getNumeroOreSettimanali() <= ORE_PARTTIME) {
-						effettuaSpesa(Pagabile.STIPENDIO_IMPIEGATOPT);
-					}
-					else effettuaSpesa(Pagabile.STIPENDIO_IMPIEGATOFT + ((ORE_FULLTIME -i.getNumeroOreSettimanali()) * Pagabile.BONUS_IMPIEGATO));
-				}
-				else if(d instanceof Quadro) {
-					Quadro q = (Quadro) d;
-					effettuaSpesa(Pagabile.STIPENDIO_QUADRO * q.getNumeroGiorniConsulenza());
-				}
+				effettuaSpesa(d.paga());
 			}
 			
 		}
 	}
 		
-	public void pagaDipendenti(Dipendente d) {
+	public void pagaDipendenti(T d) {
 		if (!d.getStatoPagamento()) {
-			d.paga();
-			if (d instanceof Dirigente) {
-				effettuaSpesa(Pagabile.STIPENDIO_DIRIGENTE);
-			} else if (d instanceof Operaio) {
-				Operaio o = (Operaio) d;
-				effettuaSpesa(Pagabile.STIPENDIO_OPERAIO + Pagabile.BONUS_OPERAIO * o.getNumeroCantieri());
-			} else if (d instanceof Impiegato) {
-				Impiegato i = (Impiegato) d;
-				if (i.getNumeroOreSettimanali() >= ORE_PARTTIME && i.getNumeroOreSettimanali() <= ORE_FULLTIME)
-					effettuaSpesa(Pagabile.STIPENDIO_IMPIEGATOFT);
-				else if (i.getNumeroOreSettimanali() <= ORE_PARTTIME) {
-					effettuaSpesa(Pagabile.STIPENDIO_IMPIEGATOPT);
-				} else
-					effettuaSpesa(Pagabile.STIPENDIO_IMPIEGATOFT
-							+ ((ORE_FULLTIME - i.getNumeroOreSettimanali()) * Pagabile.BONUS_IMPIEGATO));
-			} else if (d instanceof Quadro) {
-				Quadro q = (Quadro) d;
-				effettuaSpesa(Pagabile.STIPENDIO_QUADRO * q.getNumeroGiorniConsulenza());
-			}
+			effettuaSpesa(d.paga());
 		}
 	}
 	
@@ -94,9 +55,9 @@ public class RisorseUmane extends RepartoAmministrativo {
 	 * Azzera lo stato di pagamento di un dato tipo di dipendenti, in modo che possano essere pagati in futuro.
 	 * @param criterio criterio di scelta per selezionare i dipendenti da pagare
 	 */
-	public void nuovoMeseFiscale(Estraibile<Dipendente> criterio) {
-		ArrayList<Dipendente> daResettare =scegliDipendenti(criterio);
-		for(Dipendente d:daResettare) {
+	public void nuovoMeseFiscale(Estraibile<T> criterio) {
+		ArrayList<T> daResettare =scegliDipendenti(criterio);
+		for(Pagabile d:daResettare) {
 			d.resetStatoPagamento();
 		}
 	}
@@ -105,7 +66,7 @@ public class RisorseUmane extends RepartoAmministrativo {
 	 * Aggiunge un dipendete alla lista dei dipendi liberi
 	 * @param dipendenteAssunto dipendente da assumere
 	 */
-	public void assumi(Dipendente dipendenteAssunto) {
+	public void assumi(T dipendenteAssunto) {
 		personale.add(dipendenteAssunto);
 	}
 	
@@ -114,8 +75,9 @@ public class RisorseUmane extends RepartoAmministrativo {
 	 * @param matricolaDipendente matricola del dipendente da licenziare
 	 */
 	public void licenzia(int matricolaDipendente) {
-		Dipendente daRimuovere = null;
-		for (Dipendente d:personale) {
+		Pagabile daRimuovere = null;
+		for (Pagabile p:personale) {
+			Dipendente d  = (Dipendente) p;
 			if (d.getMatricolaDipendente() == matricolaDipendente)
 				 daRimuovere = d;
 		}
@@ -130,15 +92,15 @@ public class RisorseUmane extends RepartoAmministrativo {
 	 * @param criterio crtierio di scelta per selezionare i dipendenti da pagare
 	 * @return
 	 */
-	public ArrayList<Dipendente> scegliDipendenti(Estraibile<Dipendente> criterio){
-		ArrayList<Dipendente> estratto = new ArrayList<Dipendente>();
-		Estrattore<Dipendente> estrattore = new Estrattore<Dipendente>(personale, criterio);
+	public ArrayList<T> scegliDipendenti(Estraibile<T> criterio){
+		ArrayList<T> estratto = new ArrayList<T>();
+		Estrattore<T> estrattore = new Estrattore<T>(personale, criterio);
 		estratto = estrattore.estrai();
 		return estratto;
 	}
 	
 	public String toString() {
-		return getClass().getName()+"[personale="+personale+"]";
+		return super.toString()+"[personale="+personale+"]";
 	}
 	
 	
