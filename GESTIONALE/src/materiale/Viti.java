@@ -1,5 +1,10 @@
 package materiale;
 
+/**
+ * Questa classe rappresenta il concetto di Vite caratterizzata da un tipo
+ * @author andreaerk
+ *
+ */
 public final class Viti extends MaterialeDaCostruzione {
 	private String tipo;
 	

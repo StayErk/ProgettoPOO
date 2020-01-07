@@ -16,6 +16,12 @@ public class Cantiere implements Serializable{
 	private ArrayList<Squadra> squadre;
 	private String cliente;
 	
+	/**
+	 * Costruttore del cantiere. Si occupa di controllare se il responsabile selezionato è adatto per il lavoro altrimenti lancia IllegalArgumentException
+	 * @param valore valore del cantiere
+	 * @param capocantiere responsabile a capo del cantiere. Se il valore del cantiere supera i 500000 euro deve esere per forza un dirigente
+	 * @param cliente cliente che ha commissionato il cantiere
+	 */
 	public Cantiere(double valore, Responsabile capocantiere, String cliente) {
 		this.valore = valore;
 		Dipendente d = (Dipendente) capocantiere;

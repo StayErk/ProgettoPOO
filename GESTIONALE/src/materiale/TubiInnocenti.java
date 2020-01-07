@@ -1,5 +1,10 @@
 package materiale;
 
+/**
+ * Questa classe rappresenta il concetto di tubi innocenti caratterizzati da una lunghezza
+ * @author Andrea Ercolino
+ *
+ */
 public final class TubiInnocenti extends MaterialeDaCostruzione {
 	private int lunghezza;
 	

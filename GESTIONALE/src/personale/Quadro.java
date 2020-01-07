@@ -16,4 +16,18 @@ public class Quadro extends Dipendente implements Responsabile{
 	public int getNumeroGiorniConsulenza() {
 		return numeroGiorniConsulenza;
 	}
+	
+	public String toString() {
+		return super.toString()+"[numeroGiorniConsulenza="+numeroGiorniConsulenza+"]";
+	}
+	
+	public boolean equals(Object o) {
+		if(!super.equals(o)) return false;
+		Quadro q = (Quadro) o;
+		return numeroGiorniConsulenza == q.numeroGiorniConsulenza;
+	}
+	
+	public Quadro clone() {
+		return (Quadro) super.clone();
+	}
 }

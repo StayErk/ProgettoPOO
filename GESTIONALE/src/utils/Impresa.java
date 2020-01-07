@@ -33,6 +33,6 @@ public class Impresa implements Serializable{
 	
 	
 	public String toString(){
-		return getClass().getName() + "ru= " + ru + ", rm=" + rm + ", ro= " + ro; 
+		return getClass().getName() + "[ru= " + ru + ", rm=" + rm + ", ro= " + ro; 
 	}
 }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import personale.Dipendente;
+import personale.Operaio;
 import personale.Quadro;
 import utils.Estraibile;
 /**
@@ -14,23 +15,23 @@ import utils.Estraibile;
  */
 public class Squadra implements Serializable {
 	private Quadro caposquadra;
-	private ArrayList<Dipendente> gruppo;
+	private ArrayList<Operaio> gruppo;
 	
 	/**
 	 * se il caposquadra scelto è già impegnato lancia IllegalArgumentException()
-	 * @param caposquadra 
+	 * @param caposquadra caposquadra da mettere a capo della squadra
 	 */
 	public Squadra(Quadro caposquadra) { 
 		if (caposquadra.getStato()) throw new IllegalArgumentException();
 		this.caposquadra = caposquadra;
-		gruppo = new ArrayList<Dipendente>();
+		gruppo = new ArrayList<Operaio>();
 	}
 	
 	public Quadro getCaposquadra() {
 		return caposquadra;
 	}
 	
-	public ArrayList<Dipendente> getGruppo(){
+	public ArrayList<Operaio> getGruppo(){
 		return gruppo;
 	}
 	
@@ -40,7 +41,7 @@ public class Squadra implements Serializable {
 	 * Postcondizione: il gruppo di dipendeti della squadra nell'istante t è uguale al gruppo di dipendenti nella squadra nell'istante t-1 +1
 	 * @param daAggiungere dipendente da aggiungere
 	 */
-	public void aggiungiOperaio(Dipendente daAggiungere) {
+	public void aggiungiOperaio(Operaio daAggiungere) {
 		if (gruppo.contains(daAggiungere) || daAggiungere.getStato()) return;
 		gruppo.add(daAggiungere);
 	}
@@ -52,8 +53,8 @@ public class Squadra implements Serializable {
 	 * è la grandezza della lista da aggiungere
 	 * @param daAggiungere
 	 */
-	public void aggiungiOperaio(ArrayList<Dipendente> daAggiungere) {
-		for(Dipendente d:daAggiungere) {
+	public void aggiungiOperaio(ArrayList<Operaio> daAggiungere) {
+		for(Operaio d:daAggiungere) {
 			if (gruppo.contains(d) || d.getStato()) return;
 			gruppo.add(d);
 		}

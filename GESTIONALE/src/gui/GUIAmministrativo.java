@@ -742,15 +742,30 @@ public class GUIAmministrativo extends JFrame {
 			if (perNome.isSelected()) {
 				if(input3.getText().equals("")) criterioRU = (p) -> true;
 				criterioRU = (p) -> p.getNome().contains(input3.getText()) || p.getCognome().contains(input3.getText());
-				selezionatiDipendenti = ru.scegliDipendenti(criterioRU);
+				try{
+					selezionatiDipendenti = ru.scegliDipendenti(criterioRU);
+					areaPersonale.setText("Assunti in azienda: " + ru.getPersonale().size() + ", corrispondenti al report: " + selezionatiDipendenti.size()+"\n\n");
+					for(Dipendente d : selezionatiDipendenti) {
+						areaPersonale.append(d.getClass().getSimpleName() + " " + d.getCognome() + " " + d.getNome() + " impegnato: " + d.getStato() + " pagato: " + d.getStatoPagamento()+"\n");
+					}
+				}
+				catch (NullPointerException e) {
+					areaPersonale.setText("Assunti in azienda: " + ru.getPersonale().size() + ", corrispondenti al report: " + selezionatiDipendenti.size() +"\n" + "Il dipendente cercato non esiste. Prova ad assumerlo");
+				}
 			}
 			else {
-				selezionatiDipendenti = ru.scegliDipendenti(criterioRU);
+				try {
+					selezionatiDipendenti = ru.scegliDipendenti(criterioRU);
+					areaPersonale.setText("Assunti in azienda: " + ru.getPersonale().size() + ", corrispondenti al report: " + selezionatiDipendenti.size()+"\n\n");
+					for(Dipendente d : selezionatiDipendenti) {
+						areaPersonale.append(d.getClass().getSimpleName() + " " + d.getCognome() + " " + d.getNome() + " impegnato: " + d.getStato() + " pagato: " + d.getStatoPagamento()+"\n");
+					}
+				}
+				catch (NullPointerException e) {
+					areaPersonale.setText("Assunti in azienda: " + ru.getPersonale().size() + ", corrispondenti al report: " + selezionatiDipendenti.size() +"\n" + "Ehy perché non provi a selezionare una categoria?");
+				}
 			}
-			areaPersonale.setText("Assunti in azienda: " + ru.getPersonale().size() + ", corrispondenti al report: " + selezionatiDipendenti.size()+"\n\n");
-			for(Dipendente d : selezionatiDipendenti) {
-				areaPersonale.append(d.getClass().getSimpleName() + " " + d.getCognome() + " " + d.getNome() + " impegnato: " + d.getStato() + " pagato: " + d.getStatoPagamento()+"\n");
-			}
+			
 			
 		}
 		

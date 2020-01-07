@@ -26,7 +26,7 @@ public class GUISquadra extends JFrame {
 	private RepartoOperativo ro;
 	private RisorseUmane<Dipendente> ru;
 	private Cantiere daModificare;
-	private ArrayList<Dipendente> operai;
+	private ArrayList<Operaio> operai;
 	private JTextArea dipendetiSelezionati;
 	private JComboBox<String> quadriComboBox;
 	private JComboBox<String> operaiComboBox;
@@ -40,7 +40,7 @@ public class GUISquadra extends JFrame {
 		this.daModificare = daModificare;
 		this.ro = ro;
 		this.ru = ru;
-		operai = new ArrayList<Dipendente>();
+		operai = new ArrayList<Operaio>();
 		aggiungiOp = new JButton("Aggiungi Operaio");
 		creaSquadra = new JButton("Crea Squadra");
 		dipendetiSelezionati = new JTextArea();

@@ -8,6 +8,9 @@ public class Impiegato extends Dipendente {
 		this.numeroOreSettimanali = numeroOreSettimanali;
 	}
 	
+	/**
+	 * Contrassegna l'impiegato come pagato e restituisce lo stipendio che varia in base a quante ore a settimana lavora
+	 */
 	public double paga() {
 		super.setStatoPagamento();
 		if (numeroOreSettimanali >= Pagabile.ORE_PARTTIME && numeroOreSettimanali <= Pagabile.ORE_FULLTIME) return Pagabile.STIPENDIO_IMPIEGATOFT;
@@ -17,5 +20,16 @@ public class Impiegato extends Dipendente {
 	
 	public int getNumeroOreSettimanali() {
 		return numeroOreSettimanali;
+	}
+	
+	public String toString() {
+		return super.toString()+"[numeroPreSettimanali="+numeroOreSettimanali+"]";
+	}
+	
+	public boolean equals(Object o) {
+		if(!super.equals(o)) return false;
+		Impiegato i = (Impiegato) o;
+		
+		return numeroOreSettimanali == i.numeroOreSettimanali; 
 	}
 }

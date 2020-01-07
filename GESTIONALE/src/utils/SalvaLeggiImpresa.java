@@ -13,6 +13,12 @@ import amministrativo.RisorseMateriali;
 import amministrativo.RisorseUmane;
 import operativo.RepartoOperativo;
 
+/**
+ * Questa classe si occupa di salvare su file un'impresa e caricare da file un'impresa.
+ * 
+ * @author Andrea Ercolino
+ *
+ */
 public class SalvaLeggiImpresa implements Serializable {
 	private Impresa i;
 	
@@ -20,6 +26,10 @@ public class SalvaLeggiImpresa implements Serializable {
 		this.i = i;
 	}
 	
+	/**
+	 * Dato il nome di un file salva l'impresa all'interno del file 
+	 * @param nomeFile nome del file che verrà creato per conservare l'impresa
+	 */
 	public void SalvaImpresa(String nomeFile) {
 		File file = new File(nomeFile);
 		try {
@@ -32,6 +42,11 @@ public class SalvaLeggiImpresa implements Serializable {
 		}
 	}
 	
+	
+	/**
+	 * Dato il nome di un file carica l'impresa dal dato file se questo esiste
+	 * @param nomeFile nome del file dal quale verrà caricata l'impresa
+	 */
 	public void CaricaImpresa(String nomeFile) {
 		File file = new File(nomeFile);
 		if(file.exists()) {

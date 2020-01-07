@@ -1,5 +1,10 @@
 package materiale;
 
+/**
+ * Questa classe rappresenta il concetto di trapano caratterizzato da una potenza in watt
+ * @author Andrea Ercolino
+ *
+ */
 public final class Trapano extends MaterialeDaCostruzione {
 	private int consumoWatt;
 	

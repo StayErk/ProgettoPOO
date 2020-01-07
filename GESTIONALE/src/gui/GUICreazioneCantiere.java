@@ -70,7 +70,7 @@ public class GUICreazioneCantiere extends JFrame {
 			if (valoreCantiere > 500000) {
 				if(d instanceof Dirigente) responsabiliComboBox.addItem(d.getNome() + " " + d.getCognome());
 			}
-			responsabiliComboBox.addItem(d.getNome() + " " + d.getCognome());
+			else responsabiliComboBox.addItem(d.getNome() + " " + d.getCognome());
 		}
 		materiali = new ArrayList<MaterialeDaCostruzione>();
 		conferma = new JButton("Conferma Apertura Cantiere");
@@ -113,9 +113,9 @@ public class GUICreazioneCantiere extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				for (Dipendente d: ru.scegliDipendenti(criterioResponsabile)) {
 					if (valoreCantiere > 500000) {
-						if(d instanceof Dirigente) responsabiliComboBox.addItem(d.getNome() + " " + d.getCognome());
+						
+						if(d instanceof Quadro) responsabiliComboBox.removeItem(d.getNome() + " " + d.getCognome());
 					}
-					responsabiliComboBox.addItem(d.getNome() + " " + d.getCognome());
 				}
 			}
 			
@@ -250,9 +250,22 @@ public class GUICreazioneCantiere extends JFrame {
 						r = (Responsabile) d;
 					}
 				}
-				ro.apriCantiere(valoreCantiere, materiali, r, nomeCommittente);
-				System.out.println("GUI CREAZIONE: " + ro.getCantieriAperti());
-				dispose();
+				try {
+					ro.apriCantiere(valoreCantiere, materiali, r, nomeCommittente);
+					System.out.println("GUI CREAZIONE: " + ro.getCantieriAperti());
+					dispose();
+				}
+				catch (IllegalArgumentException e) {
+					try {
+						responsabiliComboBox.removeItem(responsabiliComboBox.getSelectedItem());
+					}
+					catch (ArrayIndexOutOfBoundsException o) {
+						System.out.println("valore del cantiere superato, scegliere dirigente");
+						materialiAggiunti.append("Valore del cantiere maggiore di 500.000€ scegliere Dirigente dalla lista\n");
+					}
+				}
+				
+				
 			}
 			
 		}

@@ -11,7 +11,9 @@ public class Dirigente extends Dipendente implements Responsabile{
 	public String getTitoloStudio(){
 		return titoloStudio;
 	}
-	
+	/**
+	 * Contrassegna il dirigente come pagato e restituisce l'ammontare del suo stipendio che è fisso 
+	 */
 	public double paga() {
 		super.setStatoPagamento();
 		return Pagabile.STIPENDIO_DIRIGENTE;

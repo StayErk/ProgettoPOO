@@ -1,5 +1,10 @@
 package materiale;
 
+/**
+ * Questa classe rappresenta il concetto di Betoniera. Questa è caratterizzata da una capienza
+ * @author andreaerk
+ *
+ */
 public final class Betoniera extends MaterialeDaCostruzione {
 	private int capacita;
 	

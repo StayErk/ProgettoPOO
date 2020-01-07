@@ -93,6 +93,7 @@ public class GUIAcquisto extends JFrame {
 					if(fornitori.getSelectedItem().equals(f.getNome())) {
 						fornitoreSelezionato = f;
 						System.out.println(f);
+						catalogo.removeAllItems();
 						for(MaterialeDaCostruzione m: f.getCatalogo()) {
 							catalogo.addItem(m.getClass().getSimpleName() + " codice: " +m.getCodiceProdotto() + " -peso: " + m.getPeso() + ", " + m.getValoreProdotto() + "€");
 						}

@@ -18,5 +18,5 @@ public interface Pagabile extends Serializable{
 	void setStatoPagamento();
 	void resetStatoPagamento();
 	boolean getStatoPagamento(); 
-	boolean getStato();
+
 }

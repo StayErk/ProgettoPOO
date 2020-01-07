@@ -11,6 +11,13 @@ import personale.Quadro;
 import utils.Estraibile;
 import utils.Estrattore;
 
+/**
+ * La classe RisorseUmane rappresenta il concetto del Reparto Risorse Umane dell'impresa, branca del Reparto Amministrativo. 
+ * Questa si occupa di gestire il personale. Conserva una Lista di Pagabili. 
+ * @author Andrea Ercolino
+ *
+ * @param <T> deve implementare l'interfaccia pagabile
+ */
 public class RisorseUmane<T extends Pagabile> extends RepartoAmministrativo {
 	private ArrayList<T> personale;
 	
@@ -22,8 +29,8 @@ public class RisorseUmane<T extends Pagabile> extends RepartoAmministrativo {
 	}
 	
 	/**
-	 * restituisce la lista del personale non impegnato in attività di cantiere
-	 * @return personale impegnato a lavoro in un cantiere
+	 * restituisce la lista del personale assunto
+	 * @return lista del personale assunto
 	 */
 	public ArrayList<T> getPersonale(){
 		return personale;
@@ -44,7 +51,11 @@ public class RisorseUmane<T extends Pagabile> extends RepartoAmministrativo {
 			
 		}
 	}
-		
+	
+		/**
+		 * Paga un pagabile passato come parametro in base allo stipendio che gli spetta
+		 * @param d dipendente da pagare
+		 */
 	public void pagaDipendenti(T d) {
 		if (!d.getStatoPagamento()) {
 			effettuaSpesa(d.paga());
@@ -52,7 +63,7 @@ public class RisorseUmane<T extends Pagabile> extends RepartoAmministrativo {
 	}
 	
 	/**
-	 * Azzera lo stato di pagamento di un dato tipo di dipendenti, in modo che possano essere pagati in futuro.
+	 * Azzera lo stato di pagamento di un dato tipo di pagabili, in modo che possano essere pagati in futuro.
 	 * @param criterio criterio di scelta per selezionare i dipendenti da pagare
 	 */
 	public void nuovoMeseFiscale(Estraibile<T> criterio) {
@@ -63,8 +74,8 @@ public class RisorseUmane<T extends Pagabile> extends RepartoAmministrativo {
 	}
 	
 	/**
-	 * Aggiunge un dipendete alla lista dei dipendi liberi
-	 * @param dipendenteAssunto dipendente da assumere
+	 * Assume un pagabile aggiungendolo allal lista del personale
+	 * @param dipendenteAssunto pagabile da assumere
 	 */
 	public void assumi(T dipendenteAssunto) {
 		personale.add(dipendenteAssunto);
@@ -86,10 +97,10 @@ public class RisorseUmane<T extends Pagabile> extends RepartoAmministrativo {
 	}
 	
 	/**
-	 * Dato un criterio di scelta restituisce una lista di dipendenti che rispettano quel criterio
+	 * Dato un criterio di scelta restituisce una lista di pagabili che rispettano quel criterio
 	 * Precondizioni: nessuna
 	 * Postcondizioni: viene restituita una lista di grandezza maggiore uguale a zero
-	 * @param criterio crtierio di scelta per selezionare i dipendenti da pagare
+	 * @param criterio crtierio di scelta per selezionare i pagabili da pagare
 	 * @return
 	 */
 	public ArrayList<T> scegliDipendenti(Estraibile<T> criterio){
