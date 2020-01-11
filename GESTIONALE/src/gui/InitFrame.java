@@ -3,6 +3,10 @@ package gui;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 import java.io.File;
 
 import javax.swing.ButtonGroup;
@@ -70,6 +74,7 @@ public class InitFrame extends JFrame {
 		capitaleAzienda = new JLabel("capitale dell'azienda: ");
 		prossimiProfitti = new JLabel("Profitti futuri: ");
 		
+		addWindowFocusListener(new UpdateWhenFocused());
 		add(mainPanel());
 		setTitle("Melenzanetti");
 		setSize(500, 750);
@@ -257,6 +262,31 @@ public class InitFrame extends JFrame {
 			}
 			
 		}
+		
+	}
+	
+	private class UpdateWhenFocused implements WindowFocusListener{
+
+
+		
+		public void windowGainedFocus(WindowEvent arg0) {
+			try {
+				capitaleAzienda.setText("Capitale azienda: " + i.getRisorseUmane().getCapitale()+"");
+				double valoreCantieriAperti = 0;
+				for(Cantiere c: i.getRepartoOperativo().getCantieriAperti()) {
+					valoreCantieriAperti += c.getValoreCantiere();
+				}
+				prossimiProfitti.setText("Prossimi profitti: " + valoreCantieriAperti);
+			}
+			catch (NullPointerException e) {
+				capitaleAzienda.setText("Capitale azienda: ");
+				prossimiProfitti.setText("Prossimi profitti: ");
+			}
+			
+		}
+
+		
+		public void windowLostFocus(WindowEvent arg0) {}
 		
 	}
 	

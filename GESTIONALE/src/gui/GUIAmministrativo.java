@@ -24,8 +24,10 @@ import materiale.MaterialeDaCostruzione;
 import operativo.RepartoOperativo;
 import personale.Dipendente;
 import personale.Pagabile;
+import utils.Comparatore;
 import utils.Estraibile;
 import utils.Impresa;
+import utils.Ordinatore;
 
 public class GUIAmministrativo extends JFrame {
 
@@ -44,6 +46,9 @@ public class GUIAmministrativo extends JFrame {
 	private JRadioButton perNome;
 	private JRadioButton nonPerNome;
 	private JRadioButton tutti;
+	private JRadioButton alfabetico;
+	private JRadioButton piuRecente;
+	private JRadioButton menoRecente;
 
 	
 	private JButton report;
@@ -96,6 +101,9 @@ public class GUIAmministrativo extends JFrame {
 		perNome = new JRadioButton("ricerca per nome");
 		nonPerNome = new JRadioButton("ricerca generica");
 		tutti = new JRadioButton("tutti");
+		alfabetico = new JRadioButton("Ordine Alfabetico");
+		menoRecente = new JRadioButton("Assunto meno di recente");
+		piuRecente = new JRadioButton("Assunto più di recente");
 		
 		report = new JButton("Genera Report");
 		refreshButton = new JButton("Ricarica");
@@ -246,10 +254,27 @@ public class GUIAmministrativo extends JFrame {
 	
 	private JPanel createCategoryAreaPersonale() {
 		JPanel p = new JPanel();
-		p.setLayout(new GridLayout(3, 1));
+		p.setBorder(new TitledBorder(new EtchedBorder(), "Report"));
+		p.setLayout(new GridLayout(4, 1));
 		p.add(categorieDipendenti());
 		p.add(statoDipendenti());
 		p.add(ricercaPerNome());
+		p.add(ordineVisualizzazione());
+		return p;
+	}
+	
+	private JPanel ordineVisualizzazione() {
+		JPanel p = new JPanel();
+		p.setBorder(new TitledBorder(new EtchedBorder(), "Ordine di visualizzazione"));
+		p.setLayout(new GridLayout(3, 1));
+		ButtonGroup g = new ButtonGroup();
+		g.add(alfabetico);
+		g.add(menoRecente);
+		g.add(piuRecente);
+		menoRecente.setSelected(true);
+		p.add(alfabetico);
+		p.add(menoRecente);
+		p.add(piuRecente);
 		return p;
 	}
 	
@@ -355,6 +380,8 @@ public class GUIAmministrativo extends JFrame {
 		nonPagati.addActionListener(new ReportUmano());
 		return p;
 	}
+	
+	
 	
 	private JPanel rightPanel() {
 		JPanel p = new JPanel();
@@ -625,16 +652,22 @@ public class GUIAmministrativo extends JFrame {
 						criterioRU = (p)->(p.getClass().getSimpleName().equals("Impiegato") || p.getClass().getSimpleName().equals("Operaio")) && !p.getStato() && p.getStatoPagamento();
 					}
 					else if (dirigenti.isSelected() && quadri.isSelected() && impiegati.isSelected() && !operai.isSelected()) {
-						criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Quadro") || !p.getClass().getSimpleName().equals("Impiegato")) && p.getStato() && p.getStatoPagamento();
+						criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Quadro") || p.getClass().getSimpleName().equals("Impiegato")) && !p.getStato() && p.getStatoPagamento();
+					}
+					else if(dirigenti.isSelected() && !quadri.isSelected() && impiegati.isSelected() && operai.isSelected()) {
+						criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Quadro") || p.getClass().getSimpleName().equals("Operaio")) && !p.getStato() && !p.getStatoPagamento();
 					}
 					else if (dirigenti.isSelected() && !quadri.isSelected() && impiegati.isSelected() && operai.isSelected()) {
-						criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Impiegato") || !p.getClass().getSimpleName().equals("Operaio")) && p.getStato() && p.getStatoPagamento();
+						criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Impiegato") || p.getClass().getSimpleName().equals("Operaio")) && !p.getStato() && p.getStatoPagamento();
 					}
 					else if (!dirigenti.isSelected() && quadri.isSelected() && impiegati.isSelected() && operai.isSelected()) {
-						criterioRU = (p)->(p.getClass().getSimpleName().equals("Quadro") || p.getClass().getSimpleName().equals("Impiegato") || !p.getClass().getSimpleName().equals("Operaio")) && p.getStato() && p.getStatoPagamento();
+						criterioRU = (p)->(p.getClass().getSimpleName().equals("Quadro") || p.getClass().getSimpleName().equals("Impiegato") || p.getClass().getSimpleName().equals("Operaio")) && !p.getStato() && p.getStatoPagamento();
 					}
 					else if (dirigenti.isSelected() && quadri.isSelected() && impiegati.isSelected() && operai.isSelected()) {
-						criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Quadro") || !p.getClass().getSimpleName().equals("Impiegato") || p.getClass().getSimpleName().equals("Operaio")) && p.getStato() && p.getStatoPagamento();
+						criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Quadro") || p.getClass().getSimpleName().equals("Impiegato") || !p.getClass().getSimpleName().equals("Operaio")) && p.getStato() && p.getStatoPagamento();
+					}
+					else if (dirigenti.isSelected() && quadri.isSelected() && !impiegati.isSelected() && operai.isSelected()) {
+						criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Quadro") || p.getClass().getSimpleName().equals("Operaio")) && !p.getStato() && p.getStatoPagamento();
 					}
 				}
 				else if (nonPagati.isSelected() && impegniati.isSelected()) {
@@ -673,6 +706,9 @@ public class GUIAmministrativo extends JFrame {
 					}
 					else if (dirigenti.isSelected() && !quadri.isSelected() && impiegati.isSelected() && operai.isSelected()) {
 						criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Impiegato") || p.getClass().getSimpleName().equals("Operaio")) && p.getStato() && !p.getStatoPagamento();
+					}
+					else if(dirigenti.isSelected() && quadri.isSelected() && !impiegati.isSelected() && operai.isSelected()) {
+						criterioRU = (p)->(p.getClass().getSimpleName().equals("Dirigente") || p.getClass().getSimpleName().equals("Quadro") || p.getClass().getSimpleName().equals("Operaio")) && p.getStato() && !p.getStatoPagamento();
 					}
 					else if (!dirigenti.isSelected() && quadri.isSelected() && impiegati.isSelected() && operai.isSelected()) {
 						criterioRU = (p)->(p.getClass().getSimpleName().equals("Quadro") || p.getClass().getSimpleName().equals("Impiegato") || p.getClass().getSimpleName().equals("Operaio")) && p.getStato() && !p.getStatoPagamento();
@@ -744,9 +780,26 @@ public class GUIAmministrativo extends JFrame {
 				criterioRU = (p) -> p.getNome().contains(input3.getText()) || p.getCognome().contains(input3.getText());
 				try{
 					selezionatiDipendenti = ru.scegliDipendenti(criterioRU);
-					areaPersonale.setText("Assunti in azienda: " + ru.getPersonale().size() + ", corrispondenti al report: " + selezionatiDipendenti.size()+"\n\n");
-					for(Dipendente d : selezionatiDipendenti) {
-						areaPersonale.append(d.getClass().getSimpleName() + " " + d.getCognome() + " " + d.getNome() + " impegnato: " + d.getStato() + " pagato: " + d.getStatoPagamento()+"\n");
+					if (alfabetico.isSelected()) {
+						Comparatore<Dipendente> criterio = (p, q)->p.getCognome().compareToIgnoreCase(q.getCognome());
+						Ordinatore<Dipendente> ordinatore = new Ordinatore<Dipendente>(criterio);
+						ordinatore.ordina(selezionatiDipendenti);
+						areaPersonale.setText("Assunti in azienda: " + ru.getPersonale().size() + ", corrispondenti al report: " + selezionatiDipendenti.size()+"\n\n");
+						for(Dipendente d : selezionatiDipendenti) {
+							areaPersonale.append(d.getClass().getSimpleName() + " " + d.getCognome() + " " + d.getNome() + " impegnato: " + d.getStato() + " pagato: " + d.getStatoPagamento()+"\n");
+						}
+					}
+					else if (menoRecente.isSelected()) {
+						areaPersonale.setText("Assunti in azienda: " + ru.getPersonale().size() + ", corrispondenti al report: " + selezionatiDipendenti.size()+"\n\n");
+						for(Dipendente d : selezionatiDipendenti) {
+							areaPersonale.append(d.getClass().getSimpleName() + " " + d.getCognome() + " " + d.getNome() + " impegnato: " + d.getStato() + " pagato: " + d.getStatoPagamento()+"\n");
+						}
+					}
+					else if(piuRecente.isSelected()){
+						areaPersonale.setText("Assunti in azienda: " + ru.getPersonale().size() + ", corrispondenti al report: " + selezionatiDipendenti.size()+"\n\n");
+						for(Dipendente d : ordinaPiuRecente()) {
+							areaPersonale.append(d.getClass().getSimpleName() + " " + d.getCognome() + " " + d.getNome() + " impegnato: " + d.getStato() + " pagato: " + d.getStatoPagamento()+"\n");
+						}
 					}
 				}
 				catch (NullPointerException e) {
@@ -756,9 +809,26 @@ public class GUIAmministrativo extends JFrame {
 			else {
 				try {
 					selezionatiDipendenti = ru.scegliDipendenti(criterioRU);
-					areaPersonale.setText("Assunti in azienda: " + ru.getPersonale().size() + ", corrispondenti al report: " + selezionatiDipendenti.size()+"\n\n");
-					for(Dipendente d : selezionatiDipendenti) {
-						areaPersonale.append(d.getClass().getSimpleName() + " " + d.getCognome() + " " + d.getNome() + " impegnato: " + d.getStato() + " pagato: " + d.getStatoPagamento()+"\n");
+					if (alfabetico.isSelected()) {
+						Comparatore<Dipendente> criterio = (p, q)->p.getCognome().compareToIgnoreCase(q.getCognome());
+						Ordinatore<Dipendente> ordinatore = new Ordinatore<Dipendente>(criterio);
+						ordinatore.ordina(selezionatiDipendenti);
+						areaPersonale.setText("Assunti in azienda: " + ru.getPersonale().size() + ", corrispondenti al report: " + selezionatiDipendenti.size()+"\n\n");
+						for(Dipendente d : selezionatiDipendenti) {
+							areaPersonale.append(d.getClass().getSimpleName() + " " + d.getCognome() + " " + d.getNome() + " impegnato: " + d.getStato() + " pagato: " + d.getStatoPagamento()+"\n");
+						}
+					}
+					else if (menoRecente.isSelected()) {
+						areaPersonale.setText("Assunti in azienda: " + ru.getPersonale().size() + ", corrispondenti al report: " + selezionatiDipendenti.size()+"\n\n");
+						for(Dipendente d : selezionatiDipendenti) {
+							areaPersonale.append(d.getClass().getSimpleName() + " " + d.getCognome() + " " + d.getNome() + " impegnato: " + d.getStato() + " pagato: " + d.getStatoPagamento()+"\n");
+						}
+					}
+					else if(piuRecente.isSelected()){
+						areaPersonale.setText("Assunti in azienda: " + ru.getPersonale().size() + ", corrispondenti al report: " + selezionatiDipendenti.size()+"\n\n");
+						for(Dipendente d : ordinaPiuRecente()) {
+							areaPersonale.append(d.getClass().getSimpleName() + " " + d.getCognome() + " " + d.getNome() + " impegnato: " + d.getStato() + " pagato: " + d.getStatoPagamento()+"\n");
+						}
 					}
 				}
 				catch (NullPointerException e) {
@@ -769,5 +839,13 @@ public class GUIAmministrativo extends JFrame {
 			
 		}
 		
+	}
+	
+	private ArrayList<Dipendente> ordinaPiuRecente(){
+		ArrayList<Dipendente> piuRecenti = new ArrayList<Dipendente>();
+		for(int i = selezionatiDipendenti.size()-1; i >= 0; i--) {
+			piuRecenti.add(selezionatiDipendenti.get(i));
+		}
+		return piuRecenti;
 	}
 }

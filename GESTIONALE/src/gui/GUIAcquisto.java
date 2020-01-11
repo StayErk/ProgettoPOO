@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -13,8 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
-
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 
 import amministrativo.RisorseMateriali;
 import eccezioni.CapacitaSuperataException;
@@ -39,6 +40,11 @@ public class GUIAcquisto extends JFrame {
 	private int caricoFuturo;
 	
 	private JTextArea vediCarrello;
+	private JTextArea risultatiRicerca;
+	
+	private JTextField input;
+	private JButton cerca;
+	
 	
 	
 	public GUIAcquisto(RisorseMateriali rm) {
@@ -52,7 +58,10 @@ public class GUIAcquisto extends JFrame {
 		}
 		
 		vediCarrello = new JTextArea();
+		risultatiRicerca = new JTextArea();
 		
+		input = new JTextField(8);
+		cerca = new JButton("Cerca");
 		aggiungiAlCarrello = new JButton("Aggiungi al Carrello");
 		compra = new JButton("Compra");
 		
@@ -77,10 +86,57 @@ public class GUIAcquisto extends JFrame {
 	
 	private JPanel leftPanel() {
 		JPanel p = new JPanel();
+		p.setLayout(new GridLayout(2, 1));
+		p.add(searchZone());
+		p.add(buyZone());
+		return p;
+	}
+	
+	private JPanel buyZone() {
+		JPanel p = new JPanel();
+		p.setBorder(new TitledBorder(new EtchedBorder(), "Buy"));
 		p.setLayout(new GridLayout(3, 1));
 		p.add(fornitoreChoice());
 		p.add(prodottoChoice());
 		p.add(aggiuntaAlCarrello());
+		return p;
+	}
+	
+	private JPanel searchZone() {
+		JPanel p = new JPanel();
+		p.setLayout(new GridLayout(2, 1));
+		p.setBorder(new TitledBorder(new EtchedBorder(), "Search"));
+		p.add(upZone());
+		p.add(downZone());
+		return p;
+	}
+	
+	private JPanel downZone() {
+		JPanel p = new JPanel();
+		p.setLayout(new GridLayout(1,1));
+		JScrollPane pane = new JScrollPane(risultatiRicerca);
+		p.add(pane);
+		return p;
+	}
+	private JPanel upZone() {
+		JPanel p = new JPanel();
+		p.setLayout(new GridLayout(2, 1));
+		p.add(inputZone());
+		p.add(confirmZone());
+		return p;
+	}
+	
+	private JPanel inputZone() {
+		JPanel p = new JPanel();
+		p.add(new JLabel("Ricerca prodotto"));
+		p.add(input);
+		return p;
+	}
+	
+	private JPanel confirmZone() {
+		JPanel p = new JPanel();
+		cerca.addActionListener(new effettuaRicerca());
+		p.add(cerca);
 		return p;
 	}
 	
@@ -133,6 +189,7 @@ public class GUIAcquisto extends JFrame {
 	
 	private JPanel infoSection() {
 		JPanel  p = new JPanel();
+		p.setBorder(new TitledBorder(new EtchedBorder(), "Carrello"));
 		p.setLayout(new GridLayout(3, 1));
 		p.add(infoSulCarico);
 		JScrollPane pane = new JScrollPane(vediCarrello);
@@ -182,6 +239,25 @@ public class GUIAcquisto extends JFrame {
 				carrello.clear();
 				costoCarrello = 0;
 				caricoFuturo = 0;
+			}
+		}
+		
+	}
+	
+	private class effettuaRicerca implements ActionListener {
+
+		public void actionPerformed(ActionEvent arg0) {
+			boolean flag;
+			risultatiRicerca.setText("");
+			risultatiRicerca.setText("Il prodotto: " + input.getText() +" può essere trovato dai fornitori:\n");
+			for(Fornitore<MaterialeDaCostruzione> f: rm.getFornitori()) {
+				flag = false;
+				for(MaterialeDaCostruzione m : f.getCatalogo()) {
+					if(m.getCodiceProdotto().contains(input.getText())) {
+						flag = true;
+					}
+				}
+				if(flag) risultatiRicerca.append(" " + f.getNome()+"\n");
 			}
 		}
 		

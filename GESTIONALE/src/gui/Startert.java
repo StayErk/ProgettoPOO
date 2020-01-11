@@ -11,7 +11,6 @@ public class Startert {
 		JFrame frame = new InitFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-
 	}
 
 }

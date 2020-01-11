@@ -62,7 +62,7 @@ public class PopolaImpresaStarter {
 		Quadro q6 = new Quadro("Jules", "Winnfield", 1);
 		
 		System.out.println("Instanzio un reparto risorse umane (ru)");
-		RisorseUmane<Dipendente> ru = new RisorseUmane<Dipendente>(50000000);
+		RisorseUmane<Dipendente> ru = new RisorseUmane<Dipendente>(5000000);
 		ru.assumi(di1);
 		ru.assumi(di2);
 		ru.assumi(di3);
@@ -144,7 +144,7 @@ public class PopolaImpresaStarter {
 		RepartoOperativo ro = new RepartoOperativo();
 		Impresa i = new Impresa(rm, ru, ro);
 		SalvaLeggiImpresa loader = new SalvaLeggiImpresa(i);
-		loader.SalvaImpresa("impresa.dat");
+		loader.SalvaImpresa("impresaEsame.dat");
 
 	}
 
